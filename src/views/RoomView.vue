@@ -2,7 +2,7 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import RoomWallpaperModal from '@/components/RoomWallpaperModal.vue'
 
-const wallpaperUrl = ref('/wallpaper-4.jpg')
+const wallpaperUrl = ref('/ai-wallpapers/wallpaper-4.jpg')
 const scale = ref(1) // Масштабирование (1 - начальный масштаб)
 const minScale = 0.5 // Минимальное уменьшение
 const maxScale = 2 // Максимальное увеличение
