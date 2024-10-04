@@ -1,0 +1,7 @@
+@import 'fonts';
+@import 'variables';
+@import 'global';
+// Import all of Bootstrap's CSS
+@import 'bootstrap/scss/bootstrap';
+
+@import './pages/index.scss';

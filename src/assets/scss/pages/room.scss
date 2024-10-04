@@ -1,0 +1,423 @@
+$gray-start: #666;
+$gray-end: #999;
+
+.room__wrapper *,
+.room__wrapper *::after,
+.room__wrapper *::before {
+  box-sizing: border-box;
+  user-select: none;
+  transform-style: preserve-3d;
+  -webkit-tap-highlight-color: transparent;
+}
+.room__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  overflow-y: hidden;
+  overflow: hidden;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+.room__zoom-buttons {
+  position: fixed;
+  top: 90px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    * {
+      transform-style: initial;
+    }
+  }
+}
+.face {
+  position: absolute;
+}
+.bordered {
+  border-left: 0.1vw solid $gray-start;
+  border-right: 0.1vw solid $gray-start;
+}
+.face span {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-repeat: repeat;
+  background-position: center;
+}
+.house {
+  position: absolute;
+  width: 28vw;
+  height: 28vw;
+  transform: perspective(90vw) rotateX(50deg) rotateZ(45deg) translateZ(-12vw);
+}
+/***************/
+/***************/
+.floor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.floor__front {
+  width: 100%;
+  height: 0.5vw;
+  transform-origin: bottom left;
+  transform: rotateX(-90deg) translateZ(26.5vw);
+}
+.floor__back {
+  width: 100%;
+  height: 0.5vw;
+  transform-origin: top left;
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-100%) translateY(-0.5vw);
+}
+.floor__right {
+  width: 0.5vw;
+  height: 100%;
+  transform-origin: top right;
+  transform: rotateX(0deg) rotateY(90deg) rotateZ(0deg) translateZ(-0.5vw) translateX(0)
+    translateY(0);
+}
+.floor__left {
+  left: 100%;
+  width: 0.5vw;
+  height: 100%;
+  transform-origin: top right;
+  transform: rotateX(0deg) rotateY(90deg) rotateZ(0deg) translateZ(-0.5vw) translateX(0)
+    translateY(0);
+}
+.floor__top {
+  width: 100%;
+  height: 100%;
+  transform-origin: top left;
+  transform: translateZ(0.5vw);
+}
+.floor__bottom {
+  width: 100%;
+  height: 100%;
+  transform-origin: top left;
+  transform: rotateY(180deg) translateX(-100%);
+}
+.floor__front {
+  background-color: $gray-start;
+}
+.floor__back {
+  background-color: $gray-start;
+}
+.floor__right {
+  background-color: $gray-start;
+}
+.floor__left {
+  background-color: $gray-start;
+}
+.floor__top {
+  background-color: $gray-start;
+}
+.floor__bottom {
+  background-color: $gray-start;
+}
+/***************/
+/***************/
+.wall-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1vw;
+  height: 100%;
+  transform: translateZ(0.5vw);
+}
+.wall-left__front {
+  width: 1vw;
+  height: 20vw;
+  transform-origin: bottom left;
+  transform: rotateX(-90deg) translateZ(7vw);
+}
+.wall-left__back {
+  width: 1vw;
+  height: 20vw;
+  transform-origin: top left;
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-1vw) translateY(-20vw);
+}
+.wall-left__right {
+  width: 27vw;
+  height: 20vw;
+  transform-origin: top left;
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(1vw) translateX(-27vw) translateY(-20vw);
+}
+.wall-left__left {
+  width: 27vw;
+  height: 20vw;
+  transform-origin: top left;
+  transform: rotateY(-90deg) rotateZ(90deg) translateY(-20vw);
+}
+.wall-left__top {
+  width: 1vw;
+  height: 100%;
+  transform-origin: top left;
+  transform: translateZ(20vw);
+}
+.wall-left__bottom {
+  width: 1vw;
+  height: 100%;
+  transform-origin: top left;
+  transform: rotateY(180deg) translateX(-1vw);
+}
+.wall-left__front {
+  background-color: $gray-end;
+}
+.wall-left__back {
+  background-color: $gray-end;
+}
+.wall-left__right::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  width: 100%;
+  height: 0.75vw;
+  background-color: $gray-start;
+  border-top: 0.1vw solid #282347;
+  border-bottom: 0.1vw solid #282347;
+}
+.wall-left__left {
+  background-color: $gray-end;
+}
+.wall-left__bottom {
+  background-color: $gray-start;
+}
+.wall-left__top {
+  background-color: $gray-start;
+}
+/***************/
+/***************/
+.wall-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1vw;
+  height: 100%;
+  transform: translateZ(0.5vw);
+}
+.wall-right__front {
+  width: 1vw;
+  height: 20vw;
+  transform-origin: bottom left;
+  transform: rotateX(-90deg) translateZ(7vw);
+}
+.wall-right__back {
+  width: 1vw;
+  height: 20vw;
+  transform-origin: top left;
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-1vw) translateY(-20vw);
+}
+.wall-right__right {
+  width: 27vw;
+  height: 20vw;
+  transform-origin: top left;
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(1vw) translateX(-27vw) translateY(-20vw);
+}
+.wall-right__left {
+  width: 27vw;
+  height: 20vw;
+  transform-origin: top left;
+  transform: rotateY(-90deg) rotateZ(90deg) translateY(-20vw);
+}
+.wall-right__top {
+  width: 1vw;
+  height: 100%;
+  transform-origin: top left;
+  transform: translateZ(20vw);
+}
+.wall-right__bottom {
+  width: 1vw;
+  height: 100%;
+  transform-origin: top left;
+  transform: rotateY(180deg) translateX(-1vw);
+}
+.wall-right__front {
+  background-color: $gray-end;
+}
+.wall-right__back {
+  background-color: $gray-end;
+}
+.wall-right__right {
+  background-color: $gray-end;
+}
+.wall-right__left::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  width: 100%;
+  height: 0.75vw;
+  background-color: $gray-start;
+  border-top: 0.1vw solid #282347;
+  border-bottom: 0.1vw solid #282347;
+}
+.wall-right__top {
+  background-color: $gray-start;
+}
+.wall-right__bottom {
+  background-color: $gray-end;
+}
+/***************/
+/***************/
+.wall-top {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 1vw;
+  transform: translateZ(0.5vw);
+}
+.wall-top__front {
+  width: 100%;
+  height: 20vw;
+  transform-origin: bottom left;
+  transform: rotateX(-90deg) translateZ(-19vw);
+}
+.wall-top__back {
+  width: 100%;
+  height: 20vw;
+  transform-origin: top left;
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-100%) translateY(-20vw);
+}
+.wall-top__right {
+  left: 100%;
+  width: 1vw;
+  height: 20vw;
+  transform-origin: top left;
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0) translateX(-1vw) translateY(-20vw);
+}
+.wall-top__left {
+  width: 1vw;
+  height: 20vw;
+  transform-origin: top left;
+  transform: rotateY(-90deg) rotateZ(90deg) translateY(-20vw);
+}
+.wall-top__top {
+  width: 100%;
+  height: 1vw;
+  transform-origin: top left;
+  transform: translateZ(20vw);
+}
+.wall-top__bottom {
+  width: 100%;
+  height: 1vw;
+  transform-origin: top left;
+  transform: rotateY(180deg) translateX(-100%);
+}
+.wall-top__front::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 0.75vw;
+  background-color: $gray-start;
+  border-top: 0.1vw solid #282347;
+  border-bottom: 0.1vw solid #282347;
+}
+.wall-top__back {
+  background-color: $gray-end;
+}
+.wall-top__right {
+  background-color: $gray-end;
+}
+.wall-top__left {
+  background-color: $gray-end;
+}
+.wall-top__top {
+  background-color: $gray-start;
+}
+.wall-top__bottom {
+  background-color: $gray-end;
+}
+/***************/
+/***************/
+.wall-bottom {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1vw;
+  transform: translateZ(0.5vw);
+}
+.wall-bottom__front {
+  width: 100%;
+  height: 20vw;
+  transform-origin: bottom left;
+  transform: rotateX(-90deg) translateZ(-19vw);
+}
+.wall-bottom__back {
+  width: 100%;
+  height: 20vw;
+  transform-origin: top left;
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-100%) translateY(-20vw);
+}
+.wall-bottom__right {
+  left: 100%;
+  width: 1vw;
+  height: 20vw;
+  transform-origin: top left;
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0) translateX(-1vw) translateY(-20vw);
+}
+.wall-bottom__left {
+  width: 1vw;
+  height: 20vw;
+  transform-origin: top left;
+  transform: rotateY(-90deg) rotateZ(90deg) translateY(-20vw);
+}
+.wall-bottom__top {
+  width: 100%;
+  height: 1vw;
+  transform-origin: top left;
+  transform: translateZ(20vw);
+}
+.wall-bottom__bottom {
+  width: 100%;
+  height: 1vw;
+  transform-origin: top left;
+  transform: rotateY(180deg) translateX(-100%);
+}
+.wall-bottom__front {
+  background: $gray-end;
+}
+.wall-bottom__back::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 0.75vw;
+  background-color: $gray-start;
+  border-top: 0.1vw solid #282347;
+  border-bottom: 0.1vw solid #282347;
+}
+.wall-bottom__right {
+  background-color: $gray-end;
+}
+.wall-bottom__left {
+  background-color: $gray-end;
+}
+.wall-bottom__top {
+  background-color: $gray-start;
+}
+.wall-bottom__bottom {
+  background-color: $gray-end;
+}
