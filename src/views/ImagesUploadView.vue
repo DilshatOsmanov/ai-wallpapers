@@ -3,7 +3,8 @@ import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { useVuelidate } from '@vuelidate/core'
-import { helpers, required, numeric, minValue } from '@vuelidate/validators'
+import { helpers, required } from '@vuelidate/validators'
+import { customNumeric } from '@/core/utils/validators'
 
 const images = ref([])
 const fileInput = ref(null)
@@ -21,18 +22,15 @@ const state = reactive({
 const rules = {
   width: {
     required: helpers.withMessage('Данное поле обязательно!', required),
-    numeric: helpers.withMessage('Поле должно быть числовым!', numeric),
-    minValue: helpers.withMessage('Необходимо ввести число больше нуля!', minValue(0.001))
+    numeric: helpers.withMessage('Поле должно быть числовым!', customNumeric)
   },
   length: {
     required: helpers.withMessage('Данное поле обязательно!', required),
-    numeric: helpers.withMessage('Поле должно быть числовым!', numeric),
-    minValue: helpers.withMessage('Необходимо ввести число больше нуля!', minValue(0.001))
+    numeric: helpers.withMessage('Поле должно быть числовым!', customNumeric)
   },
   height: {
     required: helpers.withMessage('Данное поле обязательно!', required),
-    numeric: helpers.withMessage('Поле должно быть числовым!', numeric),
-    minValue: helpers.withMessage('Необходимо ввести число больше нуля!', minValue(0.001))
+    numeric: helpers.withMessage('Поле должно быть числовым!', customNumeric)
   },
   files: {
     required: helpers.withMessage('Необходимо загрузить хотя бы одно изображение!', required),
