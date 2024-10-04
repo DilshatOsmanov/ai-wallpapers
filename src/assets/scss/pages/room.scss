@@ -148,36 +148,42 @@ $gray-end: #999;
   height: 20vw;
   transform-origin: bottom left;
   transform: rotateX(-90deg) translateZ(7vw);
+  transition: all 0.3s ease-out;
 }
 .wall-left__back {
   width: 1vw;
   height: 20vw;
   transform-origin: top left;
   transform: rotateX(-90deg) rotateY(180deg) translateX(-1vw) translateY(-20vw);
+  transition: all 0.3s ease-out;
 }
 .wall-left__right {
   width: 27vw;
   height: 20vw;
   transform-origin: top left;
   transform: rotateY(90deg) rotateZ(-90deg) translateZ(1vw) translateX(-27vw) translateY(-20vw);
+  transition: all 0.3s ease-out;
 }
 .wall-left__left {
   width: 27vw;
   height: 20vw;
   transform-origin: top left;
   transform: rotateY(-90deg) rotateZ(90deg) translateY(-20vw);
+  transition: all 0.3s ease-out;
 }
 .wall-left__top {
   width: 1vw;
   height: 100%;
   transform-origin: top left;
   transform: translateZ(20vw);
+  transition: all 0.3s ease-out;
 }
 .wall-left__bottom {
   width: 1vw;
   height: 100%;
   transform-origin: top left;
   transform: rotateY(180deg) translateX(-1vw);
+  transition: all 0.3s ease-out;
 }
 .wall-left__front {
   background-color: $gray-end;
@@ -205,6 +211,14 @@ $gray-end: #999;
 .wall-left__top {
   background-color: $gray-start;
 }
+.wall-left.active {
+  .wall-left__right {
+    opacity: 0;
+  }
+  .wall-left__left {
+    opacity: 0.2;
+  }
+}
 /***************/
 /***************/
 .wall-right {
@@ -220,36 +234,42 @@ $gray-end: #999;
   height: 20vw;
   transform-origin: bottom left;
   transform: rotateX(-90deg) translateZ(7vw);
+  transition: all 0.3s ease-out;
 }
 .wall-right__back {
   width: 1vw;
   height: 20vw;
   transform-origin: top left;
   transform: rotateX(-90deg) rotateY(180deg) translateX(-1vw) translateY(-20vw);
+  transition: all 0.3s ease-out;
 }
 .wall-right__right {
   width: 27vw;
   height: 20vw;
   transform-origin: top left;
   transform: rotateY(90deg) rotateZ(-90deg) translateZ(1vw) translateX(-27vw) translateY(-20vw);
+  transition: all 0.3s ease-out;
 }
 .wall-right__left {
   width: 27vw;
   height: 20vw;
   transform-origin: top left;
   transform: rotateY(-90deg) rotateZ(90deg) translateY(-20vw);
+  transition: all 0.3s ease-out;
 }
 .wall-right__top {
   width: 1vw;
   height: 100%;
   transform-origin: top left;
   transform: translateZ(20vw);
+  transition: all 0.3s ease-out;
 }
 .wall-right__bottom {
   width: 1vw;
   height: 100%;
   transform-origin: top left;
   transform: rotateY(180deg) translateX(-1vw);
+  transition: all 0.3s ease-out;
 }
 .wall-right__front {
   background-color: $gray-end;
@@ -277,6 +297,14 @@ $gray-end: #999;
 .wall-right__bottom {
   background-color: $gray-end;
 }
+.wall-right.active {
+  .wall-right__right {
+    opacity: 0.2;
+  }
+  .wall-right__left {
+    opacity: 0;
+  }
+}
 /***************/
 /***************/
 .wall-top {
@@ -292,12 +320,14 @@ $gray-end: #999;
   height: 20vw;
   transform-origin: bottom left;
   transform: rotateX(-90deg) translateZ(-19vw);
+  transition: all 0.3s ease-out;
 }
 .wall-top__back {
   width: 100%;
   height: 20vw;
   transform-origin: top left;
   transform: rotateX(-90deg) rotateY(180deg) translateX(-100%) translateY(-20vw);
+  transition: all 0.3s ease-out;
 }
 .wall-top__right {
   left: 100%;
@@ -305,24 +335,28 @@ $gray-end: #999;
   height: 20vw;
   transform-origin: top left;
   transform: rotateY(90deg) rotateZ(-90deg) translateZ(0) translateX(-1vw) translateY(-20vw);
+  transition: all 0.3s ease-out;
 }
 .wall-top__left {
   width: 1vw;
   height: 20vw;
   transform-origin: top left;
   transform: rotateY(-90deg) rotateZ(90deg) translateY(-20vw);
+  transition: all 0.3s ease-out;
 }
 .wall-top__top {
   width: 100%;
   height: 1vw;
   transform-origin: top left;
   transform: translateZ(20vw);
+  transition: all 0.3s ease-out;
 }
 .wall-top__bottom {
   width: 100%;
   height: 1vw;
   transform-origin: top left;
   transform: rotateY(180deg) translateX(-100%);
+  transition: all 0.3s ease-out;
 }
 .wall-top__front::after {
   content: '';
@@ -349,6 +383,14 @@ $gray-end: #999;
 .wall-top__bottom {
   background-color: $gray-end;
 }
+.wall-top.active {
+  .wall-top__front {
+    opacity: 0;
+  }
+  .wall-top__back {
+    opacity: 0.2;
+  }
+}
 /***************/
 /***************/
 .wall-bottom {
@@ -364,12 +406,14 @@ $gray-end: #999;
   height: 20vw;
   transform-origin: bottom left;
   transform: rotateX(-90deg) translateZ(-19vw);
+  transition: all 0.3s ease-out;
 }
 .wall-bottom__back {
   width: 100%;
   height: 20vw;
   transform-origin: top left;
   transform: rotateX(-90deg) rotateY(180deg) translateX(-100%) translateY(-20vw);
+  transition: all 0.3s ease-out;
 }
 .wall-bottom__right {
   left: 100%;
@@ -377,24 +421,28 @@ $gray-end: #999;
   height: 20vw;
   transform-origin: top left;
   transform: rotateY(90deg) rotateZ(-90deg) translateZ(0) translateX(-1vw) translateY(-20vw);
+  transition: all 0.3s ease-out;
 }
 .wall-bottom__left {
   width: 1vw;
   height: 20vw;
   transform-origin: top left;
   transform: rotateY(-90deg) rotateZ(90deg) translateY(-20vw);
+  transition: all 0.3s ease-out;
 }
 .wall-bottom__top {
   width: 100%;
   height: 1vw;
   transform-origin: top left;
   transform: translateZ(20vw);
+  transition: all 0.3s ease-out;
 }
 .wall-bottom__bottom {
   width: 100%;
   height: 1vw;
   transform-origin: top left;
   transform: rotateY(180deg) translateX(-100%);
+  transition: all 0.3s ease-out;
 }
 .wall-bottom__front {
   background: $gray-end;
@@ -420,4 +468,12 @@ $gray-end: #999;
 }
 .wall-bottom__bottom {
   background-color: $gray-end;
+}
+.wall-bottom.active {
+  .wall-bottom__front {
+    opacity: 0.2;
+  }
+  .wall-bottom__back {
+    opacity: 0;
+  }
 }

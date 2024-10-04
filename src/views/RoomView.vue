@@ -8,6 +8,7 @@ const minScale = 0.5 // Минимальное уменьшение
 const maxScale = 2 // Максимальное увеличение
 let currentRotationX = 50 // начальный угол вращения по оси X
 let currentRotationZ = 45 // начальный угол вращения по оси Z
+const isFirstWallGroupHide = ref(true)
 
 onMounted(() => {
   const h = document.querySelector('#h')
@@ -30,6 +31,7 @@ onMounted(() => {
 
     let newRotationX = currentRotationX - deltaY
     let newRotationZ = currentRotationZ - deltaX
+    updateActiveWalls(newRotationZ)
 
     newRotationX = Math.max(minRotationX, Math.min(maxRotationX, newRotationX))
 
@@ -54,6 +56,27 @@ onMounted(() => {
     if (transform) {
       currentRotationX = parseFloat(transform[1])
       currentRotationZ = parseFloat(transform[2])
+    }
+  }
+
+  const updateActiveWalls = (newRotationZ) => {
+    // Приводим значение к диапазону от 0 до 360
+    let normalizedRotation = newRotationZ % 360
+
+    // Если значение отрицательное, добавляем 360 для приведения к положительным значениям
+    if (normalizedRotation < 0) {
+      normalizedRotation = -normalizedRotation
+    }
+
+    // Логика активации классов
+    if (
+      (normalizedRotation >= 0 && normalizedRotation < 90) ||
+      (normalizedRotation >= 270 && normalizedRotation < 360)
+    ) {
+      isFirstWallGroupHide.value = true
+    } else if (normalizedRotation >= 90 && normalizedRotation < 270) {
+      // Активируем вторые две стены
+      isFirstWallGroupHide.value = false
     }
   }
 
@@ -255,7 +278,8 @@ const changeWallpaper = (url) => {
           <div class="floor__bottom face"></div>
         </div>
 
-        <div class="wall-left">
+        <div class="wall-left" :class="{ active: !isFirstWallGroupHide }">
+          <div class="wall-left__front face"></div>
           <div class="wall-left__right face">
             <span :style="`background-image: url('${wallpaperUrl}')`"></span>
           </div>
@@ -264,7 +288,7 @@ const changeWallpaper = (url) => {
           <div class="wall-left__bottom face"></div>
         </div>
 
-        <div class="wall-right">
+        <div class="wall-right" :class="{ active: isFirstWallGroupHide }">
           <div class="wall-right__right face bordered"></div>
           <div class="wall-right__left face">
             <span :style="`background-image: url('${wallpaperUrl}')`"></span>
@@ -273,16 +297,17 @@ const changeWallpaper = (url) => {
           <div class="wall-right__bottom face"></div>
         </div>
 
-        <div class="wall-top">
+        <div class="wall-top" :class="{ active: !isFirstWallGroupHide }">
           <div class="wall-top__front face">
             <span :style="`background-image: url('${wallpaperUrl}')`"></span>
           </div>
           <div class="wall-top__back face bordered"></div>
           <div class="wall-top__top face"></div>
           <div class="wall-top__bottom face"></div>
+          <div class="wall-top__right face"></div>
         </div>
 
-        <div class="wall-bottom">
+        <div class="wall-bottom" :class="{ active: isFirstWallGroupHide }">
           <div class="wall-bottom__front face bordered"></div>
           <div class="wall-bottom__back face">
             <span :style="`background-image: url('${wallpaperUrl}')`"></span>
