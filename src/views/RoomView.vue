@@ -215,7 +215,7 @@ const changeWallpaper = (url) => {
           data-bs-target="#exampleModal"
           class="btn btn-primary navbar-btn pull-right"
         >
-          Выбрать обои
+          Выбрать материал
         </button>
       </div>
     </nav>

@@ -40,7 +40,7 @@ const wallpaperList = ref([
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Выбрать обои</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Выбрать материал</h1>
           <button
             type="button"
             class="btn-close"
@@ -49,6 +49,13 @@ const wallpaperList = ref([
           ></button>
         </div>
         <div class="modal-body">
+          <select class="form-select mb-3" aria-label="Material select">
+            <option selected value="wallpaper">Обои</option>
+            <option value="1">Плитка</option>
+            <option value="2">Краска</option>
+            <option value="3">Панели</option>
+          </select>
+
           <div
             class="card room-modal__card mb-3"
             style="max-width: 540px"
