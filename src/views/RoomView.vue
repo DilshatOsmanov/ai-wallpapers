@@ -199,7 +199,7 @@ const changeWallpaper = (url) => {
   <button type="button" class="order-btn btn btn-success btn-lg">Оформить заказ</button>
 
   <section
-    class="bg-light min-vh-100 d-flex flex-column justify-content-between position-relative h-100vh overflow-hidden"
+    class="bg-light d-flex flex-column justify-content-between position-relative overflow-hidden"
   >
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
@@ -289,6 +289,7 @@ const changeWallpaper = (url) => {
         </div>
 
         <div class="wall-right" :class="{ active: isFirstWallGroupHide }">
+          <div class="wall-right__back face"></div>
           <div class="wall-right__right face bordered"></div>
           <div class="wall-right__left face">
             <span :style="`background-image: url('${wallpaperUrl}')`"></span>
@@ -314,6 +315,7 @@ const changeWallpaper = (url) => {
           </div>
           <div class="wall-bottom__top face"></div>
           <div class="wall-bottom__bottom face"></div>
+          <div class="wall-bottom__left face"></div>
         </div>
       </div>
     </div>
