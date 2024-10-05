@@ -70,11 +70,11 @@ onMounted(() => {
 
     // Логика активации классов
     if (
-      (normalizedRotation >= 0 && normalizedRotation < 90) ||
-      (normalizedRotation >= 270 && normalizedRotation < 360)
+      (normalizedRotation >= 0 && normalizedRotation < 120) ||
+      (normalizedRotation >= 300 && normalizedRotation < 360)
     ) {
       isFirstWallGroupHide.value = true
-    } else if (normalizedRotation >= 90 && normalizedRotation < 270) {
+    } else if (normalizedRotation >= 120 && normalizedRotation < 300) {
       // Активируем вторые две стены
       isFirstWallGroupHide.value = false
     }
