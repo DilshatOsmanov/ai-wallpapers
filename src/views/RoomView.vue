@@ -317,6 +317,50 @@ const changeWallpaper = (url) => {
           <div class="wall-bottom__bottom face"></div>
           <div class="wall-bottom__left face"></div>
         </div>
+
+        <div class="room-window" :class="{ active: !isFirstWallGroupHide }">
+          <div class="room-window__front face"></div>
+          <div class="room-window__back face"></div>
+          <div class="room-window__right face"></div>
+          <div class="room-window__left face"></div>
+          <div class="room-window__top face"></div>
+          <div class="room-window__bottom face"></div>
+        </div>
+
+        <div class="door-c" :class="{ active: !isFirstWallGroupHide }">
+          <div class="door">
+            <div class="door__front face"></div>
+            <div class="door__back face"></div>
+            <div class="door__right face"></div>
+            <div class="door__left face"></div>
+            <div class="door__top face"></div>
+            <div class="door__bottom face"></div>
+          </div>
+          <div class="door-l">
+            <div class="door-l__front face"></div>
+            <div class="door-l__back face"></div>
+            <div class="door-l__right face"></div>
+            <div class="door-l__left face"></div>
+            <div class="door-l__top face"></div>
+            <div class="door-l__bottom face"></div>
+          </div>
+          <div class="door-r">
+            <div class="door-r__front face"></div>
+            <div class="door-r__back face"></div>
+            <div class="door-r__right face"></div>
+            <div class="door-r__left face"></div>
+            <div class="door-r__top face"></div>
+            <div class="door-r__bottom face"></div>
+          </div>
+          <div class="door-t">
+            <div class="door-t__front face"></div>
+            <div class="door-t__back face"></div>
+            <div class="door-t__right face"></div>
+            <div class="door-t__left face"></div>
+            <div class="door-t__top face"></div>
+            <div class="door-t__bottom face"></div>
+          </div>
+        </div>
       </div>
     </div>
   </section>

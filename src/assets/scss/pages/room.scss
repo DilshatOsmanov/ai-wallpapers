@@ -454,3 +454,297 @@ $gray-end: #999;
     opacity: 0;
   }
 }
+
+.door-c {
+  position: absolute;
+  left: 3vw;
+  top: 1vw;
+  width: 8vw;
+  height: 0.5vw;
+  transform: translateZ(0.5vw);
+
+  &.active {
+    display: none;
+  }
+}
+.door-c::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 200%;
+  background-color: rgba(0, 0, 0, 0.65);
+  filter: blur(0.5vw);
+}
+.door {
+  position: absolute;
+  left: 0.5vw;
+  top: 0;
+  width: 7vw;
+  height: 0.5vw;
+}
+.door__front {
+  width: 7vw;
+  height: 16vw;
+  transform-origin: bottom left;
+  transform: rotateX(-90deg) translateZ(-15.75vw);
+}
+.door__back {
+  width: 7vw;
+  height: 16vw;
+  transform-origin: top left;
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-7vw) translateY(-16vw);
+}
+.door__right {
+  width: 0.25vw;
+  height: 16vw;
+  transform-origin: top left;
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(7vw) translateX(-0.25vw) translateY(-16vw);
+}
+.door__left {
+  width: 0.25vw;
+  height: 16vw;
+  transform-origin: top left;
+  transform: rotateY(-90deg) rotateZ(90deg) translateY(-16vw);
+}
+.door__top {
+  width: 7vw;
+  height: 0.25vw;
+  transform-origin: top left;
+  transform: translateZ(16vw);
+}
+.door__bottom {
+  width: 7vw;
+  height: 0.25vw;
+  transform-origin: top left;
+  transform: rotateY(180deg) translateX(-7vw);
+}
+.door__front {
+  background-color: #121332;
+  border: 0.125vw solid #000;
+}
+.door__front::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0.75vw;
+  width: 1vw;
+  height: 0.25vw;
+  background-color: #9e99c1;
+}
+.door-l,
+.door-r {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0.5vw;
+  height: 0.5vw;
+}
+.door-l__front,
+.door-r__front {
+  width: 0.5vw;
+  height: 16vw;
+  transform-origin: bottom left;
+  transform: rotateX(-90deg) translateZ(-15.5vw);
+}
+.door-l__back,
+.door-r__back {
+  width: 0.5vw;
+  height: 16vw;
+  transform-origin: top left;
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-0.5vw) translateY(-16vw);
+}
+.door-l__right,
+.door-r__right {
+  width: 0.5vw;
+  height: 16vw;
+  transform-origin: top left;
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0.5vw) translateX(-0.5vw) translateY(-16vw);
+}
+.door-l__left,
+.door-r__left {
+  width: 0.5vw;
+  height: 16vw;
+  transform-origin: top left;
+  transform: rotateY(-90deg) rotateZ(90deg) translateY(-16vw);
+}
+.door-l__top,
+.door-r__top {
+  width: 0.5vw;
+  height: 0.5vw;
+  transform-origin: top left;
+  transform: translateZ(16vw);
+}
+.door-l__bottom,
+.door-r__bottom {
+  width: 0.5vw;
+  height: 0.5vw;
+  transform-origin: top left;
+  transform: rotateY(180deg) translateX(-0.5vw);
+}
+.door-l__front,
+.door-r__front {
+  background-color: #121332;
+}
+.door-l__back,
+.door-r__back {
+  background-color: #0b0c1f;
+}
+.door-l__right,
+.door-r__right {
+  background-color: #0b0c1f;
+}
+.door-l__left,
+.door-r__left {
+  background-color: #121332;
+}
+.door-l__bottom,
+.door-r__bottom {
+  background-color: #0b0c1f;
+}
+.door-r {
+  left: calc(100% - 0.5vw);
+}
+.door-t {
+  left: 0;
+  top: 0;
+  width: 8vw;
+  height: 0.5vw;
+  transform: translateZ(16vw);
+}
+.door-t__front {
+  width: 8vw;
+  height: 0.5vw;
+  transform-origin: bottom left;
+  transform: rotateX(-90deg) translateZ(0vw);
+}
+.door-t__back {
+  width: 8vw;
+  height: 0.5vw;
+  transform-origin: top left;
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-8vw) translateY(-0.5vw);
+}
+.door-t__right {
+  width: 0.5vw;
+  height: 0.5vw;
+  transform-origin: top left;
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(8vw) translateX(-0.5vw) translateY(-0.5vw);
+}
+.door-t__left {
+  width: 0.5vw;
+  height: 0.5vw;
+  transform-origin: top left;
+  transform: rotateY(-90deg) rotateZ(90deg) translateY(-0.5vw);
+}
+.door-t__top {
+  width: 8vw;
+  height: 0.5vw;
+  transform-origin: top left;
+  transform: translateZ(0.5vw);
+}
+.door-t__bottom {
+  width: 8vw;
+  height: 0.5vw;
+  transform-origin: top left;
+  transform: rotateY(180deg) translateX(-8vw);
+}
+.door-t__front {
+  background-color: #121332;
+}
+.door-t__back {
+  background-color: #0b0c1f;
+}
+.door-t__right {
+  background-color: #0b0c1f;
+}
+.door-t__left {
+  background-color: #121332;
+}
+.door-t__top {
+  background-color: #1f2158;
+}
+.door-t__bottom {
+  background-color: #0b0c1f;
+}
+
+.room-window {
+  position: absolute;
+  left: 0;
+  top: 8vw;
+  width: 1vw;
+  height: 12vw;
+  transform: translateZ(8vw);
+
+  &.active {
+    display: none;
+  }
+}
+.room-window__front {
+  width: 1vw;
+  height: 10vw;
+  transform-origin: bottom left;
+  transform: rotateX(-90deg) translateZ(2vw) translateY(2vw);
+}
+.room-window__back {
+  width: 1vw;
+  height: 10vw;
+  transform-origin: top left;
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-1vw) translateY(-8vw);
+}
+.room-window__right {
+  width: 12vw;
+  height: 10vw;
+  transform-origin: top left;
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(1vw) translateX(-12vw) translateY(-8vw);
+}
+.room-window__left {
+  width: 12vw;
+  height: 10vw;
+  transform-origin: top left;
+  transform: rotateY(-90deg) rotateZ(90deg) translateY(-8vw);
+}
+.room-window__top {
+  width: 1vw;
+  height: 12vw;
+  transform-origin: top left;
+  transform: translateZ(8vw);
+}
+.room-window__bottom {
+  width: 1vw;
+  height: 12vw;
+  transform-origin: top left;
+  transform: rotateY(180deg) translateX(-1vw) translateZ(2vw);
+}
+.room-window__front {
+  background-color: #0b0c1f;
+}
+.room-window__back {
+  background-color: #0b0c1f;
+}
+.room-window__right {
+  background-color: #9cbcfc;
+  border: 0.125vw solid #000;
+  animation: pantalla-room-window 0.25s infinite alternate;
+}
+.room-window__right::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  opacity: 0.8;
+}
+.room-window__left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #9cbcfc;
+  border: 0.125vw solid #000;
+}
+.room-window__top {
+  background-color: #0b0c1f;
+}
+.room-window__bottom {
+  background-color: #0b0c1f;
+}
