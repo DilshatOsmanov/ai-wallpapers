@@ -40,8 +40,9 @@ onMounted(() => {
       rotateX(${newRotationX}deg)
       rotateZ(${newRotationZ}deg)
       translateZ(-12vw)
+      scale(${scale.value})
     `
-    h.style.zoom = scale.value
+    // h.style.zoom = scale.value
   }
 
   const startDrag = (e) => {
@@ -93,8 +94,9 @@ onMounted(() => {
       rotateX(${currentRotationX}deg)
       rotateZ(${currentRotationZ}deg)
       translateZ(-12vw)
+      scale(${scale.value})
     `
-    h.style.zoom = scale.value
+    // h.style.zoom = scale.value
   }
 
   // Pinch to zoom (mobile)
@@ -119,8 +121,9 @@ onMounted(() => {
       rotateX(${currentRotationX}deg)
       rotateZ(${currentRotationZ}deg)
       translateZ(-12vw)
+      scale(${scale.value})
     `
-    h.style.zoom = scale.value
+    // h.style.zoom = scale.value
   }
 
   const endPinchZoom = () => {
@@ -172,8 +175,9 @@ const zoomIn = () => {
     rotateX(${currentRotationX}deg)
     rotateZ(${currentRotationZ}deg)
     translateZ(-12vw)
+    scale(${scale.value})
   `
-  h.style.zoom = scale.value
+  // h.style.zoom = scale.value
 }
 
 const zoomOut = () => {
@@ -183,8 +187,9 @@ const zoomOut = () => {
     rotateX(${currentRotationX}deg)
     rotateZ(${currentRotationZ}deg)
     translateZ(-12vw)
+    scale(${scale.value})
   `
-  h.style.zoom = scale.value
+  // h.style.zoom = scale.value
 }
 
 // Change room wallpaper
@@ -282,6 +287,7 @@ const changeWallpaper = (url) => {
           <div class="wall-left__front face"></div>
           <div class="wall-left__right face">
             <span :style="`background-image: url('${wallpaperUrl}')`"></span>
+            <div class="room-window" :class="{ active: !isFirstWallGroupHide }"></div>
           </div>
           <div class="wall-left__left face bordered"></div>
           <div class="wall-left__top face"></div>
@@ -316,15 +322,6 @@ const changeWallpaper = (url) => {
           <div class="wall-bottom__top face"></div>
           <div class="wall-bottom__bottom face"></div>
           <div class="wall-bottom__left face"></div>
-        </div>
-
-        <div class="room-window" :class="{ active: !isFirstWallGroupHide }">
-          <div class="room-window__front face"></div>
-          <div class="room-window__back face"></div>
-          <div class="room-window__right face"></div>
-          <div class="room-window__left face"></div>
-          <div class="room-window__top face"></div>
-          <div class="room-window__bottom face"></div>
         </div>
 
         <div class="door-c" :class="{ active: !isFirstWallGroupHide }">

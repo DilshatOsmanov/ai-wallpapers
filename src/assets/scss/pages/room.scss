@@ -10,6 +10,7 @@ $gray-end: #999;
   -webkit-tap-highlight-color: transparent;
 }
 .room__wrapper {
+  touch-action: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -670,64 +671,19 @@ $gray-end: #999;
 /***************/
 .room-window {
   position: absolute;
-  left: 0;
-  top: 8vw;
-  width: 1vw;
-  height: 12vw;
-  transform: translateZ(8vw);
+  left: 50%;
+  bottom: 6vw;
+  width: 12vw;
+  height: 10vw;
+  background-color: #9cbcfc;
+  border: 0.125vw solid #000;
+  transform: translateX(-50%);
 
   &.active {
     display: none;
   }
 }
-.room-window__front {
-  width: 1vw;
-  height: 10vw;
-  transform-origin: bottom left;
-  transform: rotateX(-90deg) translateZ(2vw) translateY(2vw);
-}
-.room-window__back {
-  width: 1vw;
-  height: 10vw;
-  transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-1vw) translateY(-8vw);
-}
-.room-window__right {
-  width: 12vw;
-  height: 10vw;
-  transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(1vw) translateX(-12vw) translateY(-8vw);
-}
-.room-window__left {
-  width: 12vw;
-  height: 10vw;
-  transform-origin: top left;
-  transform: rotateY(-90deg) rotateZ(90deg) translateY(-8vw);
-}
-.room-window__top {
-  width: 1vw;
-  height: 12vw;
-  transform-origin: top left;
-  transform: translateZ(8vw);
-}
-.room-window__bottom {
-  width: 1vw;
-  height: 12vw;
-  transform-origin: top left;
-  transform: rotateY(180deg) translateX(-1vw) translateZ(2vw);
-}
-.room-window__front {
-  background-color: #0b0c1f;
-}
-.room-window__back {
-  background-color: #0b0c1f;
-}
-.room-window__right {
-  background-color: #9cbcfc;
-  border: 0.125vw solid #000;
-  animation: pantalla-room-window 0.25s infinite alternate;
-}
-.room-window__right::before {
+.room-window::before {
   content: '';
   position: absolute;
   top: 0;
@@ -736,10 +692,4 @@ $gray-end: #999;
   background-color: #000;
   width: 0.125vw;
   height: 100%;
-}
-.room-window__top {
-  background-color: #0b0c1f;
-}
-.room-window__bottom {
-  background-color: #0b0c1f;
 }

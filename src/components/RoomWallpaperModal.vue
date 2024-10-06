@@ -56,32 +56,34 @@ const wallpaperList = ref([
             <option value="3">Панели</option>
           </select>
 
-          <div
-            class="card room-modal__card mb-3"
-            style="max-width: 540px"
-            data-bs-dismiss="modal"
-            v-for="wallpaper in wallpaperList"
-            :key="wallpaper.id"
-            @click="$emit('changeWallpaper', wallpaper?.wallpaperImg)"
-          >
-            <div class="row g-0">
-              <div class="col-md-4">
+          <div class="room-modal__card-wrapper">
+            <div
+              class="room-modal__card mb-3"
+              style="max-width: 540px"
+              v-for="wallpaper in wallpaperList"
+              :key="wallpaper.id"
+            >
+              <div>
                 <img
                   :src="wallpaper.wallpaperImg"
-                  class="room-modal__card-img img-fluid rounded-start"
+                  class="room-modal__card-img img-fluid"
                   alt="wallpaper"
                 />
+                <h5 class="room-modal__card-title">{{ wallpaper.title }}</h5>
               </div>
-              <div class="col-md-8">
-                <div class="card-body">
-                  <h5 class="card-title fw-bold">{{ wallpaper.title }}</h5>
-                  <p class="card-text" style="font-size: 14px">
-                    {{ wallpaper.description }}
-                  </p>
-                  <p class="fw-semibold text-body-secondary mt-1">
-                    {{ wallpaper.price.toLocaleString('ru-RU') }} тг/рулон
-                  </p>
-                </div>
+
+              <div class="room-modal__card-inner">
+                <p class="room-modal__card-price">
+                  {{ wallpaper.price.toLocaleString('ru-RU') }} тг/рулон
+                </p>
+                <button
+                  class="room-modal__card-btn btn btn-sm btn-primary"
+                  type="button"
+                  data-bs-dismiss="modal"
+                  @click="$emit('changeWallpaper', wallpaper?.wallpaperImg)"
+                >
+                  Выбрать
+                </button>
               </div>
             </div>
           </div>
@@ -94,7 +96,7 @@ const wallpaperList = ref([
 <style lang="scss">
 .room-modal {
   & .modal-content {
-    height: 100vh;
+    height: 100dvh;
     border-radius: 0;
   }
 
@@ -117,22 +119,38 @@ const wallpaperList = ref([
     width: 100%;
   }
 
-  &__card {
-    cursor: pointer;
-    transition: all 0.3s;
+  &__card-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+  }
 
-    &:hover {
-      box-shadow:
-        0 8px 17px 0 rgba(0, 0, 0, 0.2),
-        0 6px 20px 0 rgba(0, 0, 0, 0.15);
-    }
+  &__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   &__card-img {
     height: 100%;
-    max-height: 240px;
+    max-height: 140px;
     width: 100%;
     object-fit: cover;
+  }
+
+  &__card-title {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+
+  &__card-price {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  &__card-inner {
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>
