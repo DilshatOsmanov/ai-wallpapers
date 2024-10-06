@@ -1,11 +1,6 @@
 $gray-start: #666;
 $gray-end: #999;
 
-:root {
-  --room-length: 27vw;
-  --room-width: calc(var(--room-length) * 4 / 3);
-}
-
 .room__wrapper *,
 .room__wrapper *::after,
 .room__wrapper *::before {
@@ -56,8 +51,8 @@ $gray-end: #999;
   position: absolute;
 }
 .bordered {
-  border-left: 0.1vw solid $gray-start;
-  border-right: 0.1vw solid $gray-start;
+  border-left: var(--line-depth) solid $gray-start;
+  border-right: var(--line-depth) solid $gray-start;
 }
 .face span {
   position: absolute;
@@ -84,36 +79,37 @@ $gray-end: #999;
 }
 .floor__front {
   width: 100%;
-  height: 0.5vw;
+  height: var(--half-wall-depth);
   transform-origin: bottom left;
-  transform: rotateX(-90deg) translateZ(26.5vw);
+  transform: rotateX(-90deg) translateZ(calc(var(--room-length) - var(--half-wall-depth)));
 }
 .floor__back {
   width: 100%;
-  height: 0.5vw;
+  height: var(--half-wall-depth);
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-100%) translateY(-0.5vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-100%)
+    translateY(calc(var(--half-wall-depth) * -1));
 }
 .floor__right {
-  width: 0.5vw;
+  width: var(--half-wall-depth);
   height: 100%;
   transform-origin: top right;
-  transform: rotateX(0deg) rotateY(90deg) rotateZ(0deg) translateZ(-0.5vw) translateX(0)
-    translateY(0);
+  transform: rotateX(0deg) rotateY(90deg) rotateZ(0deg)
+    translateZ(calc(var(--half-wall-depth) * -1)) translateX(0) translateY(0);
 }
 .floor__left {
   left: 100%;
-  width: 0.5vw;
+  width: var(--half-wall-depth);
   height: 100%;
   transform-origin: top right;
-  transform: rotateX(0deg) rotateY(90deg) rotateZ(0deg) translateZ(-0.5vw) translateX(0)
-    translateY(0);
+  transform: rotateX(0deg) rotateY(90deg) rotateZ(0deg)
+    translateZ(calc(var(--half-wall-depth) * -1)) translateX(0) translateY(0);
 }
 .floor__top {
   width: 100%;
   height: 100%;
   transform-origin: top left;
-  transform: translateZ(0.5vw);
+  transform: translateZ(var(--half-wall-depth));
 }
 .floor__bottom {
   width: 100%;
@@ -145,45 +141,47 @@ $gray-end: #999;
   position: absolute;
   left: 0;
   top: 0;
-  width: 1vw;
+  width: var(--wall-depth);
   height: 100%;
-  transform: translateZ(0.5vw);
+  transform: translateZ(var(--half-wall-depth));
 }
 .wall-left__front {
-  width: 1vw;
-  height: 20vw;
-  transform-origin: bottom left;
-  transform: rotateX(-90deg) translateZ(7vw);
+  width: var(--wall-depth);
+  height: var(--room-height);
+  transform-origin: top right;
+  transform: rotateX(90deg) translateZ(calc(var(--room-length) * -1));
 }
 .wall-left__back {
-  width: 1vw;
-  height: 20vw;
+  width: var(--wall-depth);
+  height: var(--room-height);
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-1vw) translateY(-20vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(calc(var(--wall-depth) * -1))
+    translateY(calc(var(--room-height) * -1));
 }
 .wall-left__right {
-  width: 27vw;
-  height: 20vw;
+  width: var(--room-length);
+  height: var(--room-height);
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(1vw) translateX(-27vw) translateY(-20vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(var(--wall-depth))
+    translateX(calc(var(--room-length) * -1)) translateY(calc(var(--room-height) * -1));
 }
 .wall-left__left {
-  width: 27vw;
-  height: 20vw;
+  width: var(--room-length);
+  height: var(--room-height);
   transform-origin: top left;
-  transform: rotateY(-90deg) rotateZ(90deg) translateY(-20vw);
+  transform: rotateY(-90deg) rotateZ(90deg) translateY(calc(var(--room-height) * -1));
 }
 .wall-left__top {
-  width: 1vw;
+  width: var(--wall-depth);
   height: 100%;
   transform-origin: top left;
-  transform: translateZ(20vw);
+  transform: translateZ(var(--room-height));
 }
 .wall-left__bottom {
-  width: 1vw;
+  width: var(--wall-depth);
   height: 100%;
   transform-origin: top left;
-  transform: rotateY(180deg) translateX(-1vw);
+  transform: rotateY(180deg) translateX(calc(var(--wall-depth) * -1));
 }
 .wall-left__front {
   background-color: $gray-end;
@@ -197,10 +195,10 @@ $gray-end: #999;
   bottom: 0;
   z-index: 1;
   width: 100%;
-  height: 0.75vw;
+  height: var(--wall-depth);
   background-color: $gray-start;
-  border-top: 0.1vw solid #282347;
-  border-bottom: 0.1vw solid #282347;
+  border-top: var(--line-depth) solid #282347;
+  border-bottom: var(--line-depth) solid #282347;
 }
 .wall-left__left {
   background-color: $gray-end;
@@ -225,45 +223,48 @@ $gray-end: #999;
   position: absolute;
   right: 0;
   top: 0;
-  width: 1vw;
+  width: var(--wall-depth);
   height: 100%;
-  transform: translateZ(0.5vw);
+  transform: translateZ(var(--half-wall-depth));
 }
 .wall-right__front {
-  width: 1vw;
-  height: 20vw;
-  transform-origin: bottom left;
-  transform: rotateX(-90deg) translateZ(7vw);
+  width: var(--wall-depth);
+  height: var(--room-height);
+  transform-origin: top left;
+  transform: rotateX(-90deg) rotateY(180deg) translateX(calc(var(--wall-depth) * -1))
+    translateY(calc(var(--room-height) * -1)) translateZ(calc(var(--room-length) * -1));
 }
 .wall-right__back {
-  width: 1vw;
-  height: 20vw;
+  width: var(--wall-depth);
+  height: var(--room-height);
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-1vw) translateY(-20vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(calc(var(--wall-depth) * -1))
+    translateY(calc(var(--room-height) * -1));
 }
 .wall-right__right {
-  width: 27vw;
-  height: 20vw;
+  width: var(--room-length);
+  height: var(--room-height);
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(1vw) translateX(-27vw) translateY(-20vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(var(--wall-depth))
+    translateX(calc(var(--room-length) * -1)) translateY(calc(var(--room-height) * -1));
 }
 .wall-right__left {
-  width: 27vw;
-  height: 20vw;
+  width: var(--room-length);
+  height: var(--room-height);
   transform-origin: top left;
-  transform: rotateY(-90deg) rotateZ(90deg) translateY(-20vw);
+  transform: rotateY(-90deg) rotateZ(90deg) translateY(calc(var(--room-height) * -1));
 }
 .wall-right__top {
-  width: 1vw;
+  width: var(--wall-depth);
   height: 100%;
   transform-origin: top left;
-  transform: translateZ(20vw);
+  transform: translateZ(var(--room-height));
 }
 .wall-right__bottom {
-  width: 1vw;
+  width: var(--wall-depth);
   height: 100%;
   transform-origin: top left;
-  transform: rotateY(180deg) translateX(-1vw);
+  transform: rotateY(180deg) translateX(calc(var(--wall-depth) * -1));
 }
 .wall-right__front {
   background-color: $gray-end;
@@ -280,10 +281,10 @@ $gray-end: #999;
   bottom: 0;
   z-index: 1;
   width: 100%;
-  height: 0.75vw;
+  height: var(--wall-depth);
   background-color: $gray-start;
-  border-top: 0.1vw solid #282347;
-  border-bottom: 0.1vw solid #282347;
+  border-top: var(--line-depth) solid #282347;
+  border-bottom: var(--line-depth) solid #282347;
 }
 .wall-right__top {
   background-color: $gray-start;
@@ -306,43 +307,45 @@ $gray-end: #999;
   left: 0;
   top: 0;
   width: 100%;
-  height: 1vw;
-  transform: translateZ(0.5vw);
+  height: var(--wall-depth);
+  transform: translateZ(var(--half-wall-depth));
 }
 .wall-top__front {
   width: 100%;
-  height: 20vw;
+  height: var(--room-height);
   transform-origin: bottom left;
-  transform: rotateX(-90deg) translateZ(-19vw);
+  transform: rotateX(-90deg) translateZ(calc((var(--room-height) - var(--wall-depth)) * -1));
 }
 .wall-top__back {
   width: 100%;
-  height: 20vw;
+  height: var(--room-height);
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-100%) translateY(-20vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-100%)
+    translateY(calc(var(--room-height) * -1));
 }
 .wall-top__right {
   left: 100%;
-  width: 1vw;
-  height: 20vw;
+  width: var(--wall-depth);
+  height: var(--room-height);
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0) translateX(-1vw) translateY(-20vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0) translateX(calc(var(--wall-depth) * -1))
+    translateY(calc(var(--room-height) * -1));
 }
 .wall-top__left {
-  width: 1vw;
-  height: 20vw;
+  width: var(--wall-depth);
+  height: var(--room-height);
   transform-origin: top left;
-  transform: rotateY(-90deg) rotateZ(90deg) translateY(-20vw);
+  transform: rotateY(-90deg) rotateZ(90deg) translateY(calc(var(--room-height) * -1));
 }
 .wall-top__top {
   width: 100%;
-  height: 1vw;
+  height: var(--wall-depth);
   transform-origin: top left;
-  transform: translateZ(20vw);
+  transform: translateZ(var(--room-height));
 }
 .wall-top__bottom {
   width: 100%;
-  height: 1vw;
+  height: var(--wall-depth);
   transform-origin: top left;
   transform: rotateY(180deg) translateX(-100%);
 }
@@ -351,10 +354,10 @@ $gray-end: #999;
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 0.75vw;
+  height: var(--wall-depth);
   background-color: $gray-start;
-  border-top: 0.1vw solid #282347;
-  border-bottom: 0.1vw solid #282347;
+  border-top: var(--line-depth) solid #282347;
+  border-bottom: var(--line-depth) solid #282347;
 }
 .wall-top__back {
   background-color: $gray-end;
@@ -386,43 +389,45 @@ $gray-end: #999;
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 1vw;
-  transform: translateZ(0.5vw);
+  height: var(--wall-depth);
+  transform: translateZ(var(--half-wall-depth));
 }
 .wall-bottom__front {
   width: 100%;
-  height: 20vw;
+  height: var(--room-height);
   transform-origin: bottom left;
-  transform: rotateX(-90deg) translateZ(-19vw);
+  transform: rotateX(-90deg) translateZ(calc((var(--room-height) - var(--wall-depth)) * -1));
 }
 .wall-bottom__back {
   width: 100%;
-  height: 20vw;
+  height: var(--room-height);
   transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-100%) translateY(-20vw);
+  transform: rotateX(-90deg) rotateY(180deg) translateX(-100%)
+    translateY(calc(var(--room-height) * -1));
 }
 .wall-bottom__right {
   left: 100%;
-  width: 1vw;
-  height: 20vw;
+  width: var(--wall-depth);
+  height: var(--room-height);
   transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0) translateX(-1vw) translateY(-20vw);
+  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0) translateX(calc(var(--wall-depth) * -1))
+    translateY(calc(var(--room-height) * -1));
 }
 .wall-bottom__left {
-  width: 1vw;
-  height: 20vw;
+  width: var(--wall-depth);
+  height: var(--room-height);
   transform-origin: top left;
-  transform: rotateY(-90deg) rotateZ(90deg) translateY(-20vw);
+  transform: rotateY(-90deg) rotateZ(90deg) translateY(calc(var(--room-height) * -1));
 }
 .wall-bottom__top {
   width: 100%;
-  height: 1vw;
+  height: var(--wall-depth);
   transform-origin: top left;
-  transform: translateZ(20vw);
+  transform: translateZ(var(--room-height));
 }
 .wall-bottom__bottom {
   width: 100%;
-  height: 1vw;
+  height: var(--wall-depth);
   transform-origin: top left;
   transform: rotateY(180deg) translateX(-100%);
 }
@@ -434,10 +439,10 @@ $gray-end: #999;
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 0.75vw;
+  height: var(--wall-depth);
   background-color: $gray-start;
-  border-top: 0.1vw solid #282347;
-  border-bottom: 0.1vw solid #282347;
+  border-top: var(--line-depth) solid #282347;
+  border-bottom: var(--line-depth) solid #282347;
 }
 .wall-bottom__right {
   background-color: $gray-end;
@@ -454,7 +459,6 @@ $gray-end: #999;
 .wall-bottom.active {
   .wall-bottom__front {
     opacity: 0.2;
-    transform: rotateX(-90deg) translateZ(-19vw) translateZ(0);
   }
   .wall-bottom__back {
     opacity: 0;
@@ -462,239 +466,39 @@ $gray-end: #999;
 }
 /***************/
 /***************/
-.door-c {
+.room-door {
   position: absolute;
-  left: 3vw;
-  top: 1vw;
-  width: 8vw;
-  height: 0.5vw;
-  transform: translateZ(0.5vw);
+  z-index: 1;
+  left: var(--door-width);
+  transform: translateX(-50%);
+  bottom: 0;
+  width: var(--door-width);
+  height: var(--door-height);
+  background-image: url('/door.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 
   &.active {
     display: none;
   }
-}
-.door-c::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 200%;
-  background-color: rgba(0, 0, 0, 0.65);
-  filter: blur(0.5vw);
-}
-.door {
-  position: absolute;
-  left: 0.5vw;
-  top: 0;
-  width: 7vw;
-  height: 0.5vw;
-}
-.door__front {
-  width: 7vw;
-  height: 16vw;
-  transform-origin: bottom left;
-  transform: rotateX(-90deg) translateZ(-15.75vw);
-}
-.door__back {
-  width: 7vw;
-  height: 16vw;
-  transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-7vw) translateY(-16vw);
-}
-.door__right {
-  width: 0.25vw;
-  height: 16vw;
-  transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(7vw) translateX(-0.25vw) translateY(-16vw);
-}
-.door__left {
-  width: 0.25vw;
-  height: 16vw;
-  transform-origin: top left;
-  transform: rotateY(-90deg) rotateZ(90deg) translateY(-16vw);
-}
-.door__top {
-  width: 7vw;
-  height: 0.25vw;
-  transform-origin: top left;
-  transform: translateZ(16vw);
-}
-.door__bottom {
-  width: 7vw;
-  height: 0.25vw;
-  transform-origin: top left;
-  transform: rotateY(180deg) translateX(-7vw);
-}
-.door__front {
-  background-color: #121332;
-  border: 0.125vw solid #000;
-}
-.door__front::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: 0.75vw;
-  width: 1vw;
-  height: 0.25vw;
-  background-color: #9e99c1;
-}
-.door-l,
-.door-r {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 0.5vw;
-  height: 0.5vw;
-}
-.door-l__front,
-.door-r__front {
-  width: 0.5vw;
-  height: 16vw;
-  transform-origin: bottom left;
-  transform: rotateX(-90deg) translateZ(-15.5vw);
-}
-.door-l__back,
-.door-r__back {
-  width: 0.5vw;
-  height: 16vw;
-  transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-0.5vw) translateY(-16vw);
-}
-.door-l__right,
-.door-r__right {
-  width: 0.5vw;
-  height: 16vw;
-  transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(0.5vw) translateX(-0.5vw) translateY(-16vw);
-}
-.door-l__left,
-.door-r__left {
-  width: 0.5vw;
-  height: 16vw;
-  transform-origin: top left;
-  transform: rotateY(-90deg) rotateZ(90deg) translateY(-16vw);
-}
-.door-l__top,
-.door-r__top {
-  width: 0.5vw;
-  height: 0.5vw;
-  transform-origin: top left;
-  transform: translateZ(16vw);
-}
-.door-l__bottom,
-.door-r__bottom {
-  width: 0.5vw;
-  height: 0.5vw;
-  transform-origin: top left;
-  transform: rotateY(180deg) translateX(-0.5vw);
-}
-.door-l__front,
-.door-r__front {
-  background-color: #121332;
-}
-.door-l__back,
-.door-r__back {
-  background-color: #0b0c1f;
-}
-.door-l__right,
-.door-r__right {
-  background-color: #0b0c1f;
-}
-.door-l__left,
-.door-r__left {
-  background-color: #121332;
-}
-.door-l__bottom,
-.door-r__bottom {
-  background-color: #0b0c1f;
-}
-.door-r {
-  left: calc(100% - 0.5vw);
-}
-.door-t {
-  left: 0;
-  top: 0;
-  width: 8vw;
-  height: 0.5vw;
-  transform: translateZ(16vw);
-}
-.door-t__front {
-  width: 8vw;
-  height: 0.5vw;
-  transform-origin: bottom left;
-  transform: rotateX(-90deg) translateZ(0vw);
-}
-.door-t__back {
-  width: 8vw;
-  height: 0.5vw;
-  transform-origin: top left;
-  transform: rotateX(-90deg) rotateY(180deg) translateX(-8vw) translateY(-0.5vw);
-}
-.door-t__right {
-  width: 0.5vw;
-  height: 0.5vw;
-  transform-origin: top left;
-  transform: rotateY(90deg) rotateZ(-90deg) translateZ(8vw) translateX(-0.5vw) translateY(-0.5vw);
-}
-.door-t__left {
-  width: 0.5vw;
-  height: 0.5vw;
-  transform-origin: top left;
-  transform: rotateY(-90deg) rotateZ(90deg) translateY(-0.5vw);
-}
-.door-t__top {
-  width: 8vw;
-  height: 0.5vw;
-  transform-origin: top left;
-  transform: translateZ(0.5vw);
-}
-.door-t__bottom {
-  width: 8vw;
-  height: 0.5vw;
-  transform-origin: top left;
-  transform: rotateY(180deg) translateX(-8vw);
-}
-.door-t__front {
-  background-color: #121332;
-}
-.door-t__back {
-  background-color: #0b0c1f;
-}
-.door-t__right {
-  background-color: #0b0c1f;
-}
-.door-t__left {
-  background-color: #121332;
-}
-.door-t__top {
-  background-color: #1f2158;
-}
-.door-t__bottom {
-  background-color: #0b0c1f;
 }
 /***************/
 /***************/
 .room-window {
   position: absolute;
+  z-index: 1;
   left: 50%;
-  bottom: 6vw;
-  width: 12vw;
-  height: 10vw;
-  background-color: #9cbcfc;
-  border: 0.125vw solid #000;
   transform: translateX(-50%);
+  bottom: var(--window-length);
+  width: var(--window-width);
+  height: var(--window-height);
+  background-image: url('/window.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 
   &.active {
     display: none;
   }
-}
-.room-window::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  background-color: #000;
-  width: 0.125vw;
-  height: 100%;
 }
