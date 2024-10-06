@@ -40,9 +40,7 @@ onMounted(() => {
       rotateX(${newRotationX}deg)
       rotateZ(${newRotationZ}deg)
       translateZ(-12vw)
-      scale(${scale.value})
     `
-    // h.style.zoom = scale.value
   }
 
   const startDrag = (e) => {
@@ -94,9 +92,7 @@ onMounted(() => {
       rotateX(${currentRotationX}deg)
       rotateZ(${currentRotationZ}deg)
       translateZ(-12vw)
-      scale(${scale.value})
     `
-    // h.style.zoom = scale.value
   }
 
   // Pinch to zoom (mobile)
@@ -121,9 +117,7 @@ onMounted(() => {
       rotateX(${currentRotationX}deg)
       rotateZ(${currentRotationZ}deg)
       translateZ(-12vw)
-      scale(${scale.value})
     `
-    // h.style.zoom = scale.value
   }
 
   const endPinchZoom = () => {
@@ -175,9 +169,7 @@ const zoomIn = () => {
     rotateX(${currentRotationX}deg)
     rotateZ(${currentRotationZ}deg)
     translateZ(-12vw)
-    scale(${scale.value})
   `
-  // h.style.zoom = scale.value
 }
 
 const zoomOut = () => {
@@ -187,9 +179,7 @@ const zoomOut = () => {
     rotateX(${currentRotationX}deg)
     rotateZ(${currentRotationZ}deg)
     translateZ(-12vw)
-    scale(${scale.value})
   `
-  // h.style.zoom = scale.value
 }
 
 // Change room wallpaper
@@ -273,7 +263,7 @@ const changeWallpaper = (url) => {
         </div>
       </div>
 
-      <div id="h" class="house" :style="{ width: roomWidth, height: roomLength }">
+      <div id="h" class="house">
         <div class="floor">
           <div class="floor__front face"></div>
           <div class="floor__back face"></div>

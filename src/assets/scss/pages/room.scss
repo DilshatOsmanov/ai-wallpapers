@@ -1,6 +1,11 @@
 $gray-start: #666;
 $gray-end: #999;
 
+:root {
+  --room-length: 27vw;
+  --room-width: calc(var(--room-length) * 4 / 3);
+}
+
 .room__wrapper *,
 .room__wrapper *::after,
 .room__wrapper *::before {
@@ -64,8 +69,8 @@ $gray-end: #999;
 }
 .house {
   position: absolute;
-  width: 28vw;
-  height: 28vw;
+  width: var(--room-width);
+  height: var(--room-length);
   transform: perspective(90vw) rotateX(50deg) rotateZ(45deg) translateZ(-12vw);
 }
 /***************/
