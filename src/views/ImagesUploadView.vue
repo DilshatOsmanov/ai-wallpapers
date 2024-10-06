@@ -37,8 +37,8 @@ const rules = {
     validFileFormat: helpers.withMessage('Формат файла должен быть PNG или JPG!', (files) => {
       return files.every((file) => ['image/png', 'image/jpeg'].includes(file.type))
     }),
-    validFileSize: helpers.withMessage('Размер файла не должен превышать 2МБ!', (files) => {
-      return files.every((file) => file.size <= 2 * 1024 * 1024) // 2MB
+    validFileSize: helpers.withMessage('Размер файла не должен превышать 5МБ!', (files) => {
+      return files.every((file) => file.size <= 5 * 1024 * 1024) // 5MB
     })
   }
 }
@@ -66,7 +66,7 @@ const handleDrop = (event) => {
 const processFiles = (files) => {
   // Append new files to the existing state.files array
   for (let file of files) {
-    if (!['image/png', 'image/jpeg'].includes(file.type) || file.size > 2 * 1024 * 1024) {
+    if (!['image/png', 'image/jpeg'].includes(file.type)) {
       continue // Skip invalid files
     }
 
