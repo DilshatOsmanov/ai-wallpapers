@@ -64,7 +64,7 @@ const onFileChange = (event) => {
 
 // Handle file drop and validate files
 const handleDrop = (event) => {
-  if(state.loading) return
+  if (state.loading) return
 
   const files = event.dataTransfer.files
   processFiles(files)
@@ -90,6 +90,8 @@ const processFiles = (files) => {
 
 // Remove image
 const removeImage = (index) => {
+  if (state.loading) return
+
   images.value.splice(index, 1)
   state.files.splice(index, 1)
 }
