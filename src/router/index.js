@@ -1,24 +1,32 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
+import store from '@/store'
+import routes from '@/router/routes'
+import middlewarePipeline from '@/router/middlewarePipeline'
+
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: () => import('../views/HomeView.vue')
-    },
-    {
-      path: '/upload',
-      name: 'images-upload-page',
-      component: () => import('../views/ImagesUploadView.vue')
-    },
-    {
-      path: '/room',
-      name: 'room-page',
-      component: () => import('../views/RoomView.vue')
-    }
-  ]
+  routes
+})
+
+router.beforeEach((to, from, next) => {
+  // secure routes
+  if (!to.meta.middleware) {
+    return next()
+  }
+  const middleware = to.meta.middleware
+
+  const context = {
+    to,
+    from,
+    next,
+    store
+  }
+
+  return middleware[0]({
+    ...context,
+    nextMiddleware: middlewarePipeline(context, middleware, 1)
+  })
 })
 
 export default router

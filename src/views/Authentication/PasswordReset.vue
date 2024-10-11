@@ -1,5 +1,101 @@
+<script setup>
+import { reactive } from 'vue'
+
+import { useRoute, useRouter } from 'vue-router'
+import { useVuelidate } from '@vuelidate/core'
+import { helpers, required, email } from '@vuelidate/validators'
+import Swal from 'sweetalert2'
+
+import { checkEmail, resetPassword } from '@/api/user'
+
+const route = useRoute()
+const router = useRouter()
+
+const state = reactive({
+  email: null,
+  password: null,
+  loading: false
+})
+
+const rules = {
+  email: {
+    required: helpers.withMessage('Данное поле обязательно!', required),
+    email: helpers.withMessage('Неверный формат почты!', email)
+  },
+  password: {
+    required: helpers.withMessage('Данное поле обязательно!', required),
+    passwordValidator: helpers.withMessage(
+      'Пароль должен содержать от 12 до 24 символов, включая хотя бы одну заглавную букву, одну строчную букву и одну цифру.',
+      helpers.regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*#?&]{12,24}$/)
+    )
+  }
+}
+
+const v$ = useVuelidate(rules, state)
+
+const fetchCheckEmail = async () => {
+  const isFormCorrect = await v$.value.email.$validate()
+  if (!isFormCorrect) return
+
+  try {
+    state.loading = true
+
+    await checkEmail({ email: state.email })
+
+    Swal.fire({
+      title: 'Запрос успешно создан!',
+      text: 'Мы отправили письмо на вашу почту для восстановления аккаунта',
+      icon: 'success',
+      showCancelButton: false,
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Продолжить'
+    }).then((result) => {
+      router.push({ name: 'login-page' })
+    })
+  } catch (error) {
+    Swal.fire({
+      text: error.response.status == 404 ? 'Пользователь не найден!' : 'Ошибка сервера!',
+      icon: 'error',
+      showCancelButton: false,
+      showConfirmButton: false
+    })
+    v$.value.$touch()
+  } finally {
+    state.loading = false
+  }
+}
+
+const fetchResetPassword = async () => {
+  const isFormCorrect = await v$.value.password.$validate()
+  if (!isFormCorrect) return
+
+  try {
+    state.loading = true
+
+    await resetPassword({
+      token: route.query.token,
+      email: route.query.email,
+      password: state.password
+    })
+
+    Swal.fire({
+      text: 'Пароль успешно восстановлен!',
+      icon: 'success',
+      showCancelButton: false,
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Продолжить'
+    }).then((result) => {
+      router.push({ name: 'login-page' })
+    })
+  } catch {
+    v$.value.$touch()
+  } finally {
+    state.loading = false
+  }
+}
+</script>
+
 <template>
-  <!-- Login 7 - Bootstrap Brain Component -->
   <section class="bg-light p-3 p-md-4 p-xl-5 min-vh-100">
     <div class="container">
       <div class="row justify-content-center">
@@ -10,69 +106,87 @@
                 <div class="col-12">
                   <div class="mb-5">
                     <div class="text-center mb-4">
-                      <a href="#">
+                      <router-link :to="{ name: 'login-page' }">
                         <img class="login__logo" src="/logo.svg" alt="Logo" />
-                      </a>
+                      </router-link>
                     </div>
-                    <h4 class="login__title text-center">
-                      Добро пожаловать обратно, мы скучали по вам!
-                    </h4>
+                    <h2 class="h4 text-center">Сброс пароля</h2>
+                    <h3 class="fs-6 fw-normal text-secondary text-center m-0">
+                      Укажите адрес электронной почты, связанный с вашей учетной записью, чтобы
+                      восстановить пароль.
+                    </h3>
                   </div>
                 </div>
               </div>
               <form>
                 <div class="row gy-3 overflow-hidden">
-                  <div class="col-12">
-                    <div class="form-floating mb-3">
+                  <div class="col-12 mb-3" v-if="!route.query.token">
+                    <div class="form-floating">
                       <input
-                        type="email"
-                        class="form-control"
-                        name="email"
                         id="email"
-                        placeholder="name@example.com"
+                        class="form-control"
+                        :class="{ 'is-invalid': v$.email.$errors.length }"
+                        name="email"
+                        type="email"
+                        placeholder=""
                         required
+                        :disabled="state.loading"
+                        v-model="state.email"
                       />
                       <label for="email" class="form-label">Email</label>
                     </div>
+                    <div
+                      class="invalid-feedback text-start d-block"
+                      v-for="error of v$.email.$errors"
+                      :key="error.$uid"
+                    >
+                      {{ error.$message }}
+                    </div>
                   </div>
-                  <div class="col-12">
-                    <div class="form-floating mb-3">
+                  <div v-else class="col-12 mb-3">
+                    <div class="form-floating">
                       <input
-                        type="password"
-                        class="form-control"
-                        name="password"
                         id="password"
-                        value=""
-                        placeholder="Password"
+                        class="form-control"
+                        :class="{ 'is-invalid': v$.password.$errors.length }"
+                        name="password"
+                        type="password"
+                        placeholder=""
                         required
+                        :disabled="state.loading"
+                        v-model="state.password"
                       />
                       <label for="password" class="form-label">Пароль</label>
                     </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        value=""
-                        name="remember_me"
-                        id="remember_me"
-                      />
-                      <label
-                        class="form-check-label text-secondary cursor-pointer"
-                        for="remember_me"
-                      >
-                        Не выходить из системы
-                      </label>
+                    <div
+                      class="invalid-feedback text-start d-block"
+                      v-for="error of v$.password.$errors"
+                      :key="error.$uid"
+                    >
+                      {{ error.$message }}
                     </div>
                   </div>
                   <div class="col-12">
                     <div class="d-grid">
-                      <router-link
-                        :to="{ name: 'images-upload-page' }"
+                      <button
+                        v-if="!route.query.token"
                         class="btn btn-lg btn-primary"
-                        >Войти</router-link
+                        type="button"
+                        :disabled="state.loading"
+                        @click="fetchCheckEmail"
                       >
+                        {{ state.loading ? 'Загрузка...' : 'Сбросить пароль' }}
+                      </button>
+
+                      <button
+                        v-else
+                        class="btn btn-lg btn-primary"
+                        type="button"
+                        :disabled="state.loading"
+                        @click="fetchResetPassword"
+                      >
+                        {{ state.loading ? 'Загрузка...' : 'Восстановить пароль' }}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -81,10 +195,16 @@
                 <div class="col-12">
                   <hr class="mt-5 mb-4 border-secondary-subtle" />
                   <div class="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
-                    <a href="#" class="link-secondary text-decoration-none"
-                      >Создать новую учетную запись</a
+                    <router-link
+                      :to="{ name: 'login-page' }"
+                      class="link-secondary text-decoration-none"
+                      >Войти</router-link
                     >
-                    <a href="#" class="link-secondary text-decoration-none">Забыли пароль</a>
+                    <router-link
+                      :to="{ name: 'register-page' }"
+                      class="link-secondary text-decoration-none"
+                      >Зарегистрироваться</router-link
+                    >
                   </div>
                 </div>
               </div>
@@ -161,24 +281,3 @@
     </div>
   </section>
 </template>
-
-<style lang="scss">
-.login {
-  &__logo {
-    width: 175px;
-  }
-
-  &__title {
-    font-size: calc(1.275rem + 0.3vw);
-  }
-
-  @media screen and (max-width: 576px) {
-    &__title {
-      font-size: 1rem;
-    }
-    &__logo {
-      width: 140px;
-    }
-  }
-}
-</style>

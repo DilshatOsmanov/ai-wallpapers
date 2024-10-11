@@ -1,6 +1,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 import { useVuelidate } from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
@@ -8,6 +9,7 @@ import { customNumeric } from '@/core/utils/validators'
 
 const images = ref([])
 const fileInput = ref(null)
+const store = useStore()
 const router = useRouter()
 
 // State for room dimensions
@@ -93,6 +95,11 @@ const generateWallpapers = async () => {
 
   router.push('/room')
 }
+
+// Logout
+const logout = () => {
+  store.dispatch('logout')
+}
 </script>
 
 <template>
@@ -111,7 +118,7 @@ const generateWallpapers = async () => {
 
           <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
             <li><a class="dropdown-item" href="#">Профиль</a></li>
-            <li><router-link class="dropdown-item" to="/">Выйти</router-link></li>
+            <li><button class="dropdown-item" type="button" @click="logout">Выйти</button></li>
           </ul>
         </div>
       </div>

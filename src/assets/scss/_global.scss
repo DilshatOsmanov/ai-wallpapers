@@ -56,3 +56,22 @@ body {
 .cursor-pointer {
   cursor: pointer;
 }
+
+.login {
+  &__logo {
+    width: 175px;
+  }
+
+  &__title {
+    font-size: calc(1.275rem + 0.3vw);
+  }
+
+  @media screen and (max-width: 576px) {
+    &__title {
+      font-size: 1rem;
+    }
+    &__logo {
+      width: 140px;
+    }
+  }
+}

@@ -7,7 +7,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 export default defineConfig({
   server: {
     host: true,
-    port: 5173
+    port: 5000
   },
   base: '/ai-wallpapers/',
   plugins: [vue(), vueJsx()],
