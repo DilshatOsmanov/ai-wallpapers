@@ -212,7 +212,7 @@ const fetchResetPassword = async () => {
                 <div class="col-12">
                   <p class="mt-5 mb-3">Или продолжить</p>
                   <div class="d-flex gap-3 flex-column">
-                    <a href="#!" class="btn bsb-btn-xl btn-danger">
+                    <a :href="baseUrl + '/oauth/google-login'" class="btn bsb-btn-xl btn-danger">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
