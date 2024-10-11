@@ -6,6 +6,9 @@ import { useStore } from 'vuex'
 import { useVuelidate } from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
 import { customNumeric } from '@/core/utils/validators'
+import Swal from 'sweetalert2'
+
+import { createRoom } from '@/api/room'
 
 const images = ref([])
 const fileInput = ref(null)
@@ -17,7 +20,8 @@ const state = reactive({
   width: null,
   length: null,
   height: null,
-  files: [] // New state for files
+  files: [],
+  loading: false
 })
 
 // Vuelidate validation rules
@@ -60,6 +64,8 @@ const onFileChange = (event) => {
 
 // Handle file drop and validate files
 const handleDrop = (event) => {
+  if(state.loading) return
+
   const files = event.dataTransfer.files
   processFiles(files)
 }
@@ -93,7 +99,30 @@ const generateWallpapers = async () => {
   const isFormCorrect = await v$.value.$validate()
   if (!isFormCorrect) return
 
-  router.push('/room')
+  try {
+    // Создаем объект FormData
+    state.loading = true
+
+    const formData = new FormData()
+    formData.append('width', state.width)
+    formData.append('height', state.height)
+    formData.append('length', state.length)
+    state.files.forEach((file, index) => {
+      formData.append(`image_files`, file)
+    })
+
+    await createRoom(formData)
+    router.push({ name: 'room-page' })
+  } catch {
+    Swal.fire({
+      text: 'Ошибка сервера!',
+      icon: 'error',
+      showCancelButton: false,
+      showConfirmButton: false
+    })
+  } finally {
+    state.loading = false
+  }
 }
 
 // Logout
@@ -161,6 +190,7 @@ const logout = () => {
               accept="image/png, image/gif, image/jpeg"
               multiple
               hidden
+              :disabled="state.loading"
               @change="onFileChange"
             />
             <span class="fs-1">+</span>
@@ -199,6 +229,7 @@ const logout = () => {
             inputmode="decimal"
             class="form-control"
             :class="{ 'is-invalid': v$.length.$errors.length }"
+            :disabled="state.loading"
             v-model="state.length"
           />
           <div class="input-group-append">
@@ -225,6 +256,7 @@ const logout = () => {
             inputmode="decimal"
             class="form-control"
             :class="{ 'is-invalid': v$.width.$errors.length }"
+            :disabled="state.loading"
             v-model="state.width"
           />
           <div class="input-group-append">
@@ -251,6 +283,7 @@ const logout = () => {
             inputmode="decimal"
             class="form-control"
             :class="{ 'is-invalid': v$.height.$errors.length }"
+            :disabled="state.loading"
             v-model="state.height"
           />
           <div class="input-group-append">
@@ -266,8 +299,13 @@ const logout = () => {
         </div>
       </div>
 
-      <button type="button" class="btn btn-primary btn-lg px-5" @click="generateWallpapers">
-        Генерировать
+      <button
+        type="button"
+        class="btn btn-primary btn-lg px-5"
+        :disabled="state.loading"
+        @click="generateWallpapers"
+      >
+        {{ state.loading ? 'Загрузка...' : 'Генерировать' }}
       </button>
     </div>
   </section>

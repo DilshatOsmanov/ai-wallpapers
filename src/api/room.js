@@ -5,4 +5,13 @@ const getRoom = async () => {
   return response
 }
 
-export { getRoom }
+const createRoom = async (formData) => {
+  const response = await axios.post('/rooms/create_room', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+  return response
+}
+
+export { getRoom, createRoom }
