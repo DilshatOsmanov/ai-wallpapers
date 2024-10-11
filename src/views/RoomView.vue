@@ -1,5 +1,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { getRoom } from '@/api/room'
+
 import RoomWallpaperModal from '@/components/RoomWallpaperModal.vue'
 
 const wallpaperUrl = ref('/ai-wallpapers/wallpaper-4.jpg')
@@ -10,6 +12,10 @@ let currentRotationX = 50 // начальный угол вращения по �
 let currentRotationZ = 45 // начальный угол вращения по оси Z
 const isFirstWallGroupHide = ref(true)
 const translateZ = ref(-12)
+
+onMounted(async () => {
+  await getRoom()
+})
 
 onMounted(() => {
   const h = document.querySelector('#h')

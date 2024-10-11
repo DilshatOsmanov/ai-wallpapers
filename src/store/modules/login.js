@@ -14,10 +14,20 @@ export default {
 
     return {
       token: userToken ? userToken : null,
-      user: localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')) : null
+      user: localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')) : null,
+      isKeepLogin: localStorage.getItem('isKeepLogin') === 'true' ? true : false
     }
   },
   mutations: {
+    keepLogin(state, isKeepLogin) {
+      localStorage.setItem('isKeepLogin', isKeepLogin)
+      state.isKeepLogin = isKeepLogin
+    },
+    removeKeepLogin(state) {
+      localStorage.removeItem('isKeepLogin')
+      sessionStorage.removeItem('isKeepLogin')
+      state.isKeepLogin = false
+    },
     saveToken(state, token) {
       localStorage.setItem('userToken', JSON.stringify(token))
       state.token = token
@@ -54,8 +64,14 @@ export default {
     }
   },
   getters: {
+    isKeepLogin(state) {
+      return state.isKeepLogin
+    },
     token(state) {
       return state.token?.access_token
+    },
+    refresh_token(state) {
+      return state.token?.refresh_token
     },
     isUserAuthenticated(state) {
       return !!state.token
@@ -68,9 +84,11 @@ export default {
     async login(context, data) {
       this.commit('removeToken')
       this.commit('removeUser')
+      this.commit('removeKeepLogin')
 
       const response = await login(data)
 
+      context.commit('keepLogin', data.isKeepLogin)
       data.isKeepLogin
         ? context.commit('saveToken', response?.data)
         : context.commit('saveTokenInSession', response?.data)
