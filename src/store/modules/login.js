@@ -101,7 +101,7 @@ export default {
       context.commit('removeToken')
       context.commit('removeUser')
       context.commit('removeKeepLogin')
-      context.commit('keepLogin', true)
+      context.commit('keepLogin', false)
       context.commit('saveToken', data)
 
       router.push({

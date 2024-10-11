@@ -1,6 +1,5 @@
 import axios from 'axios'
 import store from '@/store'
-import router from '@/router'
 
 const httpClient = axios.create({
   baseURL: import.meta.env.VITE_API_PATH
@@ -22,7 +21,7 @@ const refreshToken = async () => {
 
     return response?.data?.access_token
   } catch (error) {
-    router.push({ name: 'login-page' }) // Перенаправляем на логин в случае ошибки
+    store.commit('logout')
   }
 }
 

@@ -106,9 +106,9 @@ const generateWallpapers = async () => {
     state.loading = true
 
     const formData = new FormData()
-    formData.append('width', state.width)
-    formData.append('height', state.height)
-    formData.append('length', state.length)
+    formData.append('width', state.width.toString().replace(',', '.'))
+    formData.append('height', state.height.toString().replace(',', '.'))
+    formData.append('length', state.length.toString().replace(',', '.'))
     state.files.forEach((file, index) => {
       formData.append(`image_files`, file)
     })
