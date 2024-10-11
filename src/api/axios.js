@@ -3,14 +3,14 @@ import store from '@/store'
 import router from '@/router'
 
 const httpClient = axios.create({
-  baseURL: 'https://wallpaper-ai-1.onrender.com'
+  baseURL: import.meta.env.VITE_API_PATH
 })
 
 // Функция для обновления access токена
 const refreshToken = async () => {
   try {
     const refreshToken = store.getters.refresh_token
-    const response = await axios.post('https://wallpaper-ai-1.onrender.com/auth/refresh', null, {
+    const response = await axios.post(import.meta.env.VITE_API_PATH + '/auth/refresh', null, {
       headers: { 'refresh-token': refreshToken }
     })
 

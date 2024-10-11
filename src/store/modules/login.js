@@ -82,9 +82,9 @@ export default {
   },
   actions: {
     async login(context, data) {
-      this.commit('removeToken')
-      this.commit('removeUser')
-      this.commit('removeKeepLogin')
+      context.commit('removeToken')
+      context.commit('removeUser')
+      context.commit('removeKeepLogin')
 
       const response = await login(data)
 
@@ -92,6 +92,17 @@ export default {
       data.isKeepLogin
         ? context.commit('saveToken', response?.data)
         : context.commit('saveTokenInSession', response?.data)
+
+      router.push({
+        name: 'images-upload-page'
+      })
+    },
+    setToken(context, data) {
+      context.commit('removeToken')
+      context.commit('removeUser')
+      context.commit('removeKeepLogin')
+      context.commit('keepLogin', true)
+      context.commit('saveToken', data)
 
       router.push({
         name: 'images-upload-page'
