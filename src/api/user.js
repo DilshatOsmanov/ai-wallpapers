@@ -22,4 +22,11 @@ const verifyEmail = async (data) => {
   return response
 }
 
-export { addUser, resetPassword, checkEmail, verifyEmail }
+const googleAuth = async (data) => {
+  const response = await axios.get('/oauth/auth/google', {
+    params: data
+  })
+  return response
+}
+
+export { addUser, resetPassword, checkEmail, verifyEmail, googleAuth }

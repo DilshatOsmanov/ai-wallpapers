@@ -45,7 +45,7 @@ const routes = [
     component: () => import('@/views/Authentication/PasswordReset.vue')
   },
   {
-    path: '/auth',
+    path: '/auth/google',
     name: 'google-auth-page',
     meta: { middleware: [isNotAuth] },
     component: () => import('@/views/Authentication/GoogleAuth.vue')
