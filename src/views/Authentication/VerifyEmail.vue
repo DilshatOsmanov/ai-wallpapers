@@ -41,9 +41,7 @@ onMounted(async () => {
                 <div class="col-12">
                   <div class="mb-5">
                     <div class="text-center mb-4">
-                      <router-link :to="{ name: 'login-page' }">
-                        <img class="login__logo" src="/logo.svg" alt="Logo" />
-                      </router-link>
+                      <img class="login__logo" src="/logo.svg" alt="Logo" />
                     </div>
                     <h4 class="login__title text-center mb-0" v-if="state.error">
                       Ошибка активации аккаунта, попробуйте еще раз!
@@ -60,11 +58,11 @@ onMounted(async () => {
                 </div>
               </div>
 
-              <div v-if="!state.loading" class="row gy-3 overflow-hidden">
+              <div v-if="state.error" class="row gy-3 overflow-hidden">
                 <div class="col-12 mt-0">
                   <div class="d-grid">
                     <router-link class="btn btn-lg btn-primary" :to="{ name: 'login-page' }">
-                      Войти
+                      Повторить попытку
                     </router-link>
                   </div>
                 </div>
