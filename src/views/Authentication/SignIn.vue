@@ -54,7 +54,7 @@ const login = async () => {
 </script>
 
 <template>
-  <section class="bg-light p-3 p-md-4 p-xl-5 min-vh-100">
+  <section class="bg-light p-3 p-md-4 p-xl-5 min-vh-100 d-flex align-items-center">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 col-md-9 col-lg-7 col-xl-6 col-xxl-5">
