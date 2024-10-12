@@ -33,7 +33,7 @@ const routes = [
     component: () => import('@/views/Authentication/SignUp.vue')
   },
   {
-    path: '/verify',
+    path: '/users/verify',
     name: 'verify-email-page',
     meta: { middleware: [isNotAuth] },
     component: () => import('@/views/Authentication/VerifyEmail.vue')
