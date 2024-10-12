@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { reactive, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -8,11 +8,14 @@ import { googleAuth } from '@/api/user'
 const store = useStore()
 const route = useRoute()
 const router = useRouter()
-const error = ref(false)
+const state = reactive({
+  error: false
+})
 
 onMounted(async () => {
   if (!route.query.code) router.push({ name: 'login-page' })
   try {
+    state.error = false
     const { data } = await googleAuth({ code: route.query.code })
 
     store.dispatch('setToken', {
@@ -20,7 +23,7 @@ onMounted(async () => {
       refresh_token: data.refresh_token
     })
   } catch {
-    error.value = true
+    state.error = true
   }
 })
 </script>
