@@ -39,7 +39,7 @@ const routes = [
     component: () => import('@/views/Authentication/VerifyEmail.vue')
   },
   {
-    path: '/reset-password',
+    path: '/users/reset-password',
     name: 'password-reset-page',
     meta: { middleware: [isNotAuth] },
     component: () => import('@/views/Authentication/PasswordReset.vue')
