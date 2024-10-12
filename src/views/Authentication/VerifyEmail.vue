@@ -58,11 +58,11 @@ onMounted(async () => {
                 </div>
               </div>
 
-              <div v-if="state.error" class="row gy-3 overflow-hidden">
+              <div v-if="!state.loading" class="row gy-3 overflow-hidden">
                 <div class="col-12 mt-0">
                   <div class="d-grid">
                     <router-link class="btn btn-lg btn-primary" :to="{ name: 'login-page' }">
-                      Повторить попытку
+                      {{ state.error ? 'Войти' : 'Повторить попытку' }}
                     </router-link>
                   </div>
                 </div>
