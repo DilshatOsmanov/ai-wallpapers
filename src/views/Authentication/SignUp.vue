@@ -10,6 +10,7 @@ import { addUser } from '@/api/user'
 
 const router = useRouter()
 
+const baseUrl = import.meta.env.VITE_API_PATH
 const state = reactive({
   name: null,
   email: null,

@@ -11,6 +11,7 @@ import { checkEmail, resetPassword } from '@/api/user'
 const route = useRoute()
 const router = useRouter()
 
+const baseUrl = import.meta.env.VITE_API_PATH
 const state = reactive({
   email: null,
   password: null,
