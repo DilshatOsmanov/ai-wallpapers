@@ -62,7 +62,7 @@ onMounted(async () => {
                 <div class="col-12 mt-0">
                   <div class="d-grid">
                     <router-link class="btn btn-lg btn-primary" :to="{ name: 'login-page' }">
-                      {{ state.error ? 'Войти' : 'Повторить попытку' }}
+                      {{ !state.error ? 'Войти' : 'Повторить попытку' }}
                     </router-link>
                   </div>
                 </div>
