@@ -1,0 +1,1 @@
+import{s as e}from"./index-5a7fxE22.js";const r=async()=>await e.get("/rooms/view_room/"),a=async o=>await e.post("/rooms/create_room",o,{headers:{"Content-Type":"multipart/form-data"}});export{a as c,r as g};
