@@ -10,7 +10,10 @@ const minScale = 1 // Минимальное уменьшение
 const maxScale = 3 // Максимальное увеличение
 let currentRotationX = 50 // начальный угол вращения по оси X
 let currentRotationZ = 45 // начальный угол вращения по оси Z
-const isFirstWallGroupHide = ref(true)
+const isFirstWallHide = ref(false)
+const isSecondWallHide = ref(true)
+const isThirdWallHide = ref(false)
+const isFourthWallHide = ref(true)
 const translateZ = ref(-12)
 
 // onMounted(async () => {
@@ -75,15 +78,52 @@ onMounted(() => {
       normalizedRotation = -normalizedRotation
     }
 
+    isFirstWallHide.value = false
+    isSecondWallHide.value = false
+    isThirdWallHide.value = false
+    isFourthWallHide.value = false
+
     // Логика активации классов
-    if (
-      (normalizedRotation >= 0 && normalizedRotation < 120) ||
-      (normalizedRotation >= 300 && normalizedRotation < 360)
-    ) {
-      isFirstWallGroupHide.value = true
-    } else if (normalizedRotation >= 120 && normalizedRotation < 300) {
-      // Активируем вторые две стены
-      isFirstWallGroupHide.value = false
+    if (normalizedRotation >= 0 && normalizedRotation <= 10 && newRotationZ >= 0) {
+      isFirstWallHide.value = true
+      isFourthWallHide.value = true
+    }
+    if (normalizedRotation >= 10 && normalizedRotation <= 100 && newRotationZ >= 0) {
+      isSecondWallHide.value = true
+      isFourthWallHide.value = true
+    }
+    if (normalizedRotation >= 100 && normalizedRotation <= 190 && newRotationZ >= 0) {
+      isSecondWallHide.value = true
+      isThirdWallHide.value = true
+    }
+    if (normalizedRotation >= 190 && normalizedRotation <= 280 && newRotationZ >= 0) {
+      isFirstWallHide.value = true
+      isThirdWallHide.value = true
+    }
+    if (normalizedRotation >= 280 && normalizedRotation <= 360 && newRotationZ >= 0) {
+      isFirstWallHide.value = true
+      isFourthWallHide.value = true
+    }
+
+    if (normalizedRotation >= 0 && normalizedRotation <= 10 && newRotationZ < 0) {
+      isFirstWallHide.value = true
+      isFourthWallHide.value = true
+    }
+    if (normalizedRotation >= 10 && normalizedRotation <= 100 && newRotationZ < 0) {
+      isFirstWallHide.value = true
+      isFourthWallHide.value = true
+    }
+    if (normalizedRotation >= 100 && normalizedRotation <= 190 && newRotationZ < 0) {
+      isFirstWallHide.value = true
+      isThirdWallHide.value = true
+    }
+    if (normalizedRotation >= 190 && normalizedRotation <= 280 && newRotationZ < 0) {
+      isSecondWallHide.value = true
+      isThirdWallHide.value = true
+    }
+    if (normalizedRotation >= 280 && normalizedRotation <= 360 && newRotationZ < 0) {
+      isSecondWallHide.value = true
+      isFourthWallHide.value = true
     }
   }
 
@@ -374,19 +414,21 @@ const changeWallpaper = (url) => {
           <div class="floor__bottom face"></div>
         </div>
 
-        <div class="wall-left" :class="{ active: !isFirstWallGroupHide }">
+        <div class="wall-left" :class="{ active: isFirstWallHide }">
+          <div class="wall-left__back face"></div>
           <div class="wall-left__front face"></div>
           <div class="wall-left__right face">
             <span :style="`background-image: url('${wallpaperUrl}')`"></span>
-            <div class="room-window" :class="{ active: !isFirstWallGroupHide }"></div>
+            <div class="room-window" :class="{ active: isFirstWallHide }"></div>
           </div>
           <div class="wall-left__left face bordered"></div>
           <div class="wall-left__top face"></div>
           <div class="wall-left__bottom face"></div>
         </div>
 
-        <div class="wall-right" :class="{ active: isFirstWallGroupHide }">
+        <div class="wall-right" :class="{ active: isSecondWallHide }">
           <div class="wall-right__back face"></div>
+          <div class="wall-right__front face"></div>
           <div class="wall-right__right face bordered"></div>
           <div class="wall-right__left face">
             <span :style="`background-image: url('${wallpaperUrl}')`"></span>
@@ -395,24 +437,26 @@ const changeWallpaper = (url) => {
           <div class="wall-right__bottom face"></div>
         </div>
 
-        <div class="wall-top" :class="{ active: !isFirstWallGroupHide }">
+        <div class="wall-top" :class="{ active: isThirdWallHide }">
           <div class="wall-top__front face">
             <span :style="`background-image: url('${wallpaperUrl}')`"></span>
-            <div class="room-door" :class="{ active: !isFirstWallGroupHide }"></div>
+            <div class="room-door" :class="{ active: isThirdWallHide }"></div>
           </div>
           <div class="wall-top__back face bordered"></div>
           <div class="wall-top__top face"></div>
           <div class="wall-top__bottom face"></div>
           <div class="wall-top__right face"></div>
+          <div class="wall-top__left face"></div>
         </div>
 
-        <div class="wall-bottom" :class="{ active: isFirstWallGroupHide }">
+        <div class="wall-bottom" :class="{ active: isFourthWallHide }">
           <div class="wall-bottom__front face bordered"></div>
           <div class="wall-bottom__back face">
             <span :style="`background-image: url('${wallpaperUrl}')`"></span>
           </div>
           <div class="wall-bottom__top face"></div>
           <div class="wall-bottom__bottom face"></div>
+          <div class="wall-bottom__right face"></div>
           <div class="wall-bottom__left face"></div>
         </div>
       </div>
