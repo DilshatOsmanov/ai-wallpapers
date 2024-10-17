@@ -1,7 +1,6 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
 
 import { useVuelidate } from '@vuelidate/core'
 import { helpers, required } from '@vuelidate/validators'
@@ -11,7 +10,6 @@ import Swal from 'sweetalert2'
 import { createRoom } from '@/api/room'
 import ImagesUpload from '@/components/ImagesUpload.vue'
 
-const store = useStore()
 const router = useRouter()
 
 // State for room dimensions
@@ -110,36 +108,9 @@ const generateWallpapers = async () => {
     state.loading = false
   }
 }
-
-// Logout
-const logout = () => {
-  store.dispatch('logout')
-}
 </script>
 
 <template>
-  <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-      <div class="d-flex align-items-center justify-content-end w-100">
-        <div class="dropdown">
-          <button
-            type="button"
-            class="header__avatar"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            JD
-          </button>
-
-          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-            <li><a class="dropdown-item" href="#">Профиль</a></li>
-            <li><button class="dropdown-item" type="button" @click="logout">Выйти</button></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </nav>
-
   <section
     class="bg-light p-3 p-md-4 p-xl-5 min-vh-100 d-flex flex-column justify-content-between"
     style="padding-top: 5rem !important"
@@ -379,32 +350,5 @@ const logout = () => {
 
 .input-group-text {
   border-radius: 0 var(--bs-border-radius) var(--bs-border-radius) 0;
-}
-</style>
-
-<style lang="scss">
-.navbar-fixed-top {
-  background-color: #222222;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-}
-
-.header__avatar {
-  width: 35px;
-  height: 35px;
-  background-color: #007bff;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 50%;
-  font-size: 18px;
-  font-weight: bold;
-  text-transform: uppercase;
-  user-select: none;
 }
 </style>

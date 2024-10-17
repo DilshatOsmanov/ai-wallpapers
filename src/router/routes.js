@@ -6,6 +6,7 @@ const routes = [
     path: '/',
     name: 'main',
     meta: { middleware: [isAuth] },
+    component: () => import('@/layout/MainLayout.vue'),
     children: [
       {
         path: '/',

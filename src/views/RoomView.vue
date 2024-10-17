@@ -332,29 +332,28 @@ const changeWallpaper = (url) => {
 </script>
 
 <template>
-  <button type="button" class="order-btn btn btn-success btn-lg">Оформить заказ</button>
+  <div class="order-btn">
+    <button
+      type="button"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+      class="btn btn-primary navbar-btn pull-right me-2"
+    >
+      Выбрать материал
+    </button>
+    <button type="button" class="btn btn-success">Оформить заказ</button>
+  </div>
 
   <section
     class="bg-light d-flex flex-column justify-content-between position-relative overflow-hidden"
   >
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <router-link
-          :to="{ name: 'images-upload-page' }"
-          class="btn btn-secondary navbar-btn pull-left"
-          >Назад</router-link
-        >
-
-        <button
-          type="button"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-          class="btn btn-primary navbar-btn pull-right"
-        >
-          Выбрать материал
-        </button>
-      </div>
-    </nav>
+    <teleport to="#header_topbar">
+      <router-link
+        :to="{ name: 'images-upload-page' }"
+        class="btn btn-secondary navbar-btn pull-left"
+        >Назад</router-link
+      >
+    </teleport>
 
     <div class="room__wrapper">
       <div class="room__zoom-buttons">
@@ -467,20 +466,15 @@ const changeWallpaper = (url) => {
 </template>
 
 <style lang="scss">
-.navbar-fixed-top {
-  background-color: #222222;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-}
-
 .order-btn {
   position: fixed;
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
