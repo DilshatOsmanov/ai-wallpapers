@@ -102,7 +102,7 @@ export default {
       context.commit('removeUser')
       context.commit('removeKeepLogin')
       context.commit('keepLogin', false)
-      context.commit('saveToken', data)
+      context.commit('saveTokenInSession', data)
 
       router.push({
         name: 'images-upload-page'

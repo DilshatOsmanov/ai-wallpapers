@@ -4,7 +4,7 @@ import { getRoom } from '@/api/room'
 
 import RoomWallpaperModal from '@/components/RoomWallpaperModal.vue'
 
-const wallpaperUrl = ref('/ai-wallpapers/wallpaper-4.jpg')
+const wallpaperUrl = ref('/wallpaper-4.jpg')
 const scale = ref(1) // Масштабирование (1 - начальный масштаб)
 const minScale = 1 // Минимальное уменьшение
 const maxScale = 3 // Максимальное увеличение
@@ -13,9 +13,9 @@ let currentRotationZ = 45 // начальный угол вращения по �
 const isFirstWallGroupHide = ref(true)
 const translateZ = ref(-12)
 
-onMounted(async () => {
-  await getRoom()
-})
+// onMounted(async () => {
+//   await getRoom()
+// })
 
 onMounted(() => {
   const h = document.querySelector('#h')

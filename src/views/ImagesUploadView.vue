@@ -9,9 +9,8 @@ import { customNumeric } from '@/core/utils/validators'
 import Swal from 'sweetalert2'
 
 import { createRoom } from '@/api/room'
+import ImagesUpload from '@/components/ImagesUpload.vue'
 
-const images = ref([])
-const fileInput = ref(null)
 const store = useStore()
 const router = useRouter()
 
@@ -20,7 +19,10 @@ const state = reactive({
   width: null,
   length: null,
   height: null,
-  files: [],
+  wall_files_1: [],
+  wall_files_2: [],
+  wall_files_3: [],
+  wall_files_4: [],
   loading: false
 })
 
@@ -38,7 +40,34 @@ const rules = {
     required: helpers.withMessage('Данное поле обязательно!', required),
     numeric: helpers.withMessage('Поле должно быть числовым!', customNumeric)
   },
-  files: {
+  wall_files_1: {
+    required: helpers.withMessage('Необходимо загрузить хотя бы одно изображение!', required),
+    validFileFormat: helpers.withMessage('Формат файла должен быть PNG или JPG!', (files) => {
+      return files.every((file) => ['image/png', 'image/jpeg'].includes(file.type))
+    }),
+    validFileSize: helpers.withMessage('Размер файла не должен превышать 5МБ!', (files) => {
+      return files.every((file) => file.size <= 5 * 1024 * 1024) // 5MB
+    })
+  },
+  wall_files_2: {
+    required: helpers.withMessage('Необходимо загрузить хотя бы одно изображение!', required),
+    validFileFormat: helpers.withMessage('Формат файла должен быть PNG или JPG!', (files) => {
+      return files.every((file) => ['image/png', 'image/jpeg'].includes(file.type))
+    }),
+    validFileSize: helpers.withMessage('Размер файла не должен превышать 5МБ!', (files) => {
+      return files.every((file) => file.size <= 5 * 1024 * 1024) // 5MB
+    })
+  },
+  wall_files_3: {
+    required: helpers.withMessage('Необходимо загрузить хотя бы одно изображение!', required),
+    validFileFormat: helpers.withMessage('Формат файла должен быть PNG или JPG!', (files) => {
+      return files.every((file) => ['image/png', 'image/jpeg'].includes(file.type))
+    }),
+    validFileSize: helpers.withMessage('Размер файла не должен превышать 5МБ!', (files) => {
+      return files.every((file) => file.size <= 5 * 1024 * 1024) // 5MB
+    })
+  },
+  wall_files_4: {
     required: helpers.withMessage('Необходимо загрузить хотя бы одно изображение!', required),
     validFileFormat: helpers.withMessage('Формат файла должен быть PNG или JPG!', (files) => {
       return files.every((file) => ['image/png', 'image/jpeg'].includes(file.type))
@@ -50,51 +79,6 @@ const rules = {
 }
 
 const v$ = useVuelidate(rules, state)
-
-// Open file picker
-const openFilePicker = () => {
-  fileInput.value.click()
-}
-
-// Handle file selection and validate files
-const onFileChange = (event) => {
-  const files = event.target.files
-  processFiles(files)
-}
-
-// Handle file drop and validate files
-const handleDrop = (event) => {
-  if (state.loading) return
-
-  const files = event.dataTransfer.files
-  processFiles(files)
-}
-
-// Helper function to process and validate files
-const processFiles = (files) => {
-  // Append new files to the existing state.files array
-  for (let file of files) {
-    if (!['image/png', 'image/jpeg'].includes(file.type)) {
-      continue // Skip invalid files
-    }
-
-    state.files.push(file) // Append file to state.files
-
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      images.value.push({ url: e.target.result }) // Append image to images array
-    }
-    reader.readAsDataURL(file)
-  }
-}
-
-// Remove image
-const removeImage = (index) => {
-  if (state.loading) return
-
-  images.value.splice(index, 1)
-  state.files.splice(index, 1)
-}
 
 // Generate wallpapers, validate the form and files
 const generateWallpapers = async () => {
@@ -109,7 +93,7 @@ const generateWallpapers = async () => {
     formData.append('width', state.width.toString().replace(',', '.'))
     formData.append('height', state.height.toString().replace(',', '.'))
     formData.append('length', state.length.toString().replace(',', '.'))
-    state.files.forEach((file, index) => {
+    state.wall_files_1.forEach((file, index) => {
       formData.append(`image_files`, file)
     })
 
@@ -176,41 +160,51 @@ const logout = () => {
 
       <!-- Зона загрузки изображений -->
       <div class="row mb-4">
-        <div
-          class="col-12 image-upload-page__img-upload-form"
-          @dragover.prevent
-          @drop.prevent="handleDrop"
-          style="border: 2px dashed rgba(0, 0, 0, 0.7); padding: 1rem"
-        >
-          <div
-            class="cursor-pointer border rounded d-flex align-items-center justify-content-center image-upload-page__add-img-btn"
-            @click="openFilePicker"
-          >
-            <input
-              type="file"
-              ref="fileInput"
-              accept="image/png, image/gif, image/jpeg"
-              multiple
-              hidden
-              :disabled="state.loading"
-              @change="onFileChange"
-            />
-            <span class="fs-1">+</span>
-          </div>
-
-          <div v-for="(image, index) in images" :key="index" class="position-relative">
-            <img :src="image.url" class="img-thumbnail" />
-            <button
-              type="button"
-              class="btn-close position-absolute top-0 end-0"
-              @click="removeImage(index)"
-            ></button>
-          </div>
-        </div>
+        <label for="wall-1" class="form-label text-start w-100">Стена №1</label>
+        <ImagesUpload id="wall-1" :loading="state.loading" v-model:files="state.wall_files_1" />
 
         <div
           class="d-block invalid-feedback text-start"
-          v-for="error of v$.files.$errors"
+          v-for="error of v$.wall_files_1.$errors"
+          :key="error.$uid"
+        >
+          {{ error.$message }}
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <label for="wall-2" class="form-label text-start w-100">Стена №2</label>
+        <ImagesUpload id="wall-2" :loading="state.loading" v-model:files="state.wall_files_2" />
+
+        <div
+          class="d-block invalid-feedback text-start"
+          v-for="error of v$.wall_files_2.$errors"
+          :key="error.$uid"
+        >
+          {{ error.$message }}
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <label for="wall-3" class="form-label text-start w-100">Стена №3</label>
+        <ImagesUpload id="wall-3" :loading="state.loading" v-model:files="state.wall_files_3" />
+
+        <div
+          class="d-block invalid-feedback text-start"
+          v-for="error of v$.wall_files_3.$errors"
+          :key="error.$uid"
+        >
+          {{ error.$message }}
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <label for="wall-4" class="form-label text-start w-100">Стена №4</label>
+        <ImagesUpload id="wall-4" :loading="state.loading" v-model:files="state.wall_files_4" />
+
+        <div
+          class="d-block invalid-feedback text-start"
+          v-for="error of v$.wall_files_4.$errors"
           :key="error.$uid"
         >
           {{ error.$message }}
@@ -313,7 +307,7 @@ const logout = () => {
   </section>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .img-thumbnail {
   width: 100%;
   height: 100%;

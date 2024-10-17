@@ -8,7 +8,7 @@ const wallpaperList = ref([
     description:
       'Cristiana Masi всегда следит за качеством продукции. Данная модель обоев имеет артикул 23613. Виниловые обои часто используют как в квартирах, так и в загородных домах.',
     price: 3000,
-    wallpaperImg: '/ai-wallpapers/wallpaper.jpg'
+    wallpaperImg: '/wallpaper.jpg'
   },
   {
     id: 2,
@@ -16,7 +16,7 @@ const wallpaperList = ref([
     description:
       'Коллекция текстильных обоев Rasch Textil Nubia - творение немецких дизайнеров с выверенными линиями и формами гармонично сочетающимися друг с другом, как сообщающиеся сосуды.',
     price: 3500,
-    wallpaperImg: '/ai-wallpapers/wallpaper-2.jpg'
+    wallpaperImg: '/wallpaper-2.jpg'
   },
   {
     id: 3,
@@ -24,7 +24,7 @@ const wallpaperList = ref([
     description:
       'Коллекция текстильных обоев Rasch Textil Nubia - творение немецких дизайнеров с выверенными линиями и формами гармонично сочетающимися друг с другом, как сообщающиеся сосуды.',
     price: 4500,
-    wallpaperImg: '/ai-wallpapers/wallpaper-3.jpg'
+    wallpaperImg: '/wallpaper-3.jpg'
   }
 ])
 </script>
