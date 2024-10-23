@@ -16,9 +16,9 @@ const isThirdWallHide = ref(false)
 const isFourthWallHide = ref(true)
 const translateZ = ref(-12)
 
-// onMounted(async () => {
-//   await getRoom()
-// })
+onMounted(async () => {
+  await getRoom()
+})
 
 onMounted(() => {
   const h = document.querySelector('#h')
