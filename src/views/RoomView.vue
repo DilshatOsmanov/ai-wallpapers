@@ -2,6 +2,9 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { getRoom } from '@/api/room'
 
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
+
 import RoomWallpaperModal from '@/components/RoomWallpaperModal.vue'
 
 const wallpaperUrl = ref('/wallpaper-4.jpg')
@@ -16,12 +19,34 @@ const isThirdWallHide = ref(false)
 const isFourthWallHide = ref(true)
 const translateZ = ref(-12)
 
+const roomRef = ref(null)
+const loading = ref(false)
 onMounted(async () => {
-  await getRoom()
+  try {
+    loading.value = true
+    const { data } = await getRoom()
+
+    roomLengthMeters.value = data?.room_parameters?.length
+    roomWidthMeters.value = data?.room_parameters?.width
+    roomHeightMeters.value = data?.room_parameters?.height
+  } catch {
+    roomLengthMeters.value = 3
+    roomWidthMeters.value = 4
+    roomHeightMeters.value = 2.5
+
+    toast('Ошибка загрузки комнаты!', {
+      theme: 'auto',
+      type: 'error',
+      dangerouslyHTMLString: true
+    })
+  } finally {
+    loading.value = false
+    initRoom()
+  }
 })
 
-onMounted(() => {
-  const h = document.querySelector('#h')
+const initRoom = () => {
+  const h = roomRef.value
   const b = document.body
 
   let isDragging = false
@@ -56,8 +81,9 @@ onMounted(() => {
 
   const startDrag = (e) => {
     isDragging = true
-    startX = e.pageX || e.touches[0].pageX
-    startY = e.pageY || e.touches[0].pageY
+
+    startX = e.pageX || (e.touches ? e.touches[0].pageX : null)
+    startY = e.pageY || (e.touches ? e.touches[0].pageY : null)
   }
 
   const stopDrag = () => {
@@ -150,7 +176,7 @@ onMounted(() => {
   const zoomSensitivity = 0.1 // Коэффициент чувствительности (уменьшите для снижения чувствительности)
 
   const handlePinchZoom = (e) => {
-    if (e.touches.length < 2) return
+    if (e.touches?.length < 2) return
     if ([...b.classList].includes('modal-open')) return
 
     const touch1 = e.touches[0]
@@ -206,14 +232,14 @@ onMounted(() => {
 
   // initialize
   updateRoomSize()
-})
+}
 
 // Functions to handle zoom from buttons
 const zoomIn = () => {
   scale.value = Math.min(maxScale, scale.value + 0.05)
   translateZ.value = -12 - (scale.value - 1) * 10 // Чем больше масштаб, тем меньше translateZ
 
-  document.querySelector('#h').style.transform = `
+  roomRef.value.style.transform = `
     perspective(90vw)
     rotateX(${currentRotationX}deg)
     rotateZ(${currentRotationZ}deg)
@@ -226,7 +252,7 @@ const zoomOut = () => {
   scale.value = Math.max(minScale, scale.value - 0.05)
   translateZ.value = -12 - (scale.value - 1) * 10 // Чем меньше масштаб, тем больше translateZ
 
-  document.querySelector('#h').style.transform = `
+  roomRef.value.style.transform = `
     perspective(90vw)
     rotateX(${currentRotationX}deg)
     rotateZ(${currentRotationZ}deg)
@@ -236,9 +262,9 @@ const zoomOut = () => {
 }
 
 // Размеры комнаты в метрах
-const roomLengthMeters = 4 // Длина (в метрах)
-const roomWidthMeters = 3 // Ширина (в метрах)
-const roomHeightMeters = 2.5 // Высота (в метрах)
+const roomLengthMeters = ref(0) // Длина (в метрах)
+const roomWidthMeters = ref(0) // Ширина (в метрах)
+const roomHeightMeters = ref(0) // Высота (в метрах)
 const baseLength = 27 // Основанное значение для длины (например, 27vw)
 
 const doorWidthMeters = 0.9 // Ширина (в метрах)
@@ -253,69 +279,69 @@ const lineDepth = 0.1 // Толщина стены (в vw)
 
 const updateRoomSize = () => {
   const root = document.documentElement
-  if (roomLengthMeters < roomWidthMeters) {
+  if (roomLengthMeters.value < roomWidthMeters.value) {
     root.style.setProperty('--room-length', `${baseLength * scale.value}vw`)
     root.style.setProperty(
       '--room-width',
-      `${(baseLength * roomWidthMeters * scale.value) / roomLengthMeters}vw`
+      `${(baseLength * roomWidthMeters.value * scale.value) / roomLengthMeters.value}vw`
     )
     root.style.setProperty(
       '--room-height',
-      `${(baseLength * roomHeightMeters * scale.value) / roomLengthMeters}vw`
+      `${(baseLength * roomHeightMeters.value * scale.value) / roomLengthMeters.value}vw`
     )
 
     root.style.setProperty(
       '--door-width',
-      `${(baseLength * doorWidthMeters * scale.value) / roomLengthMeters}vw`
+      `${(baseLength * doorWidthMeters * scale.value) / roomLengthMeters.value}vw`
     )
     root.style.setProperty(
       '--door-height',
-      `${(baseLength * doorHeightMeters * scale.value) / roomLengthMeters}vw`
+      `${(baseLength * doorHeightMeters * scale.value) / roomLengthMeters.value}vw`
     )
 
     root.style.setProperty(
       '--window-length',
-      `${(baseLength * windowLengthMeters * scale.value) / roomLengthMeters}vw`
+      `${(baseLength * windowLengthMeters * scale.value) / roomLengthMeters.value}vw`
     )
     root.style.setProperty(
       '--window-width',
-      `${(baseLength * windowWidthMeters * scale.value) / roomLengthMeters}vw`
+      `${(baseLength * windowWidthMeters * scale.value) / roomLengthMeters.value}vw`
     )
     root.style.setProperty(
       '--window-height',
-      `${(baseLength * windowHeightMeters * scale.value) / roomLengthMeters}vw`
+      `${(baseLength * windowHeightMeters * scale.value) / roomLengthMeters.value}vw`
     )
   } else {
     root.style.setProperty('--room-width', `${baseLength * scale.value}vw`)
     root.style.setProperty(
       '--room-length',
-      `${(baseLength * roomLengthMeters * scale.value) / roomWidthMeters}vw`
+      `${(baseLength * roomLengthMeters.value * scale.value) / roomWidthMeters.value}vw`
     )
     root.style.setProperty(
       '--room-height',
-      `${(baseLength * roomHeightMeters * scale.value) / roomWidthMeters}vw`
+      `${(baseLength * roomHeightMeters.value * scale.value) / roomWidthMeters.value}vw`
     )
 
     root.style.setProperty(
       '--door-width',
-      `${(baseLength * doorWidthMeters * scale.value) / roomWidthMeters}vw`
+      `${(baseLength * doorWidthMeters * scale.value) / roomWidthMeters.value}vw`
     )
     root.style.setProperty(
       '--door-height',
-      `${(baseLength * doorHeightMeters * scale.value) / roomWidthMeters}vw`
+      `${(baseLength * doorHeightMeters * scale.value) / roomWidthMeters.value}vw`
     )
 
     root.style.setProperty(
       '--window-length',
-      `${(baseLength * windowLengthMeters * scale.value) / roomWidthMeters}vw`
+      `${(baseLength * windowLengthMeters * scale.value) / roomWidthMeters.value}vw`
     )
     root.style.setProperty(
       '--window-width',
-      `${(baseLength * windowWidthMeters * scale.value) / roomWidthMeters}vw`
+      `${(baseLength * windowWidthMeters * scale.value) / roomWidthMeters.value}vw`
     )
     root.style.setProperty(
       '--window-height',
-      `${(baseLength * windowHeightMeters * scale.value) / roomWidthMeters}vw`
+      `${(baseLength * windowHeightMeters * scale.value) / roomWidthMeters.value}vw`
     )
   }
 
@@ -403,7 +429,11 @@ const changeWallpaper = (url) => {
         </div>
       </div>
 
-      <div id="h" class="house">
+      <div class="spinner-border text-primary" role="status" v-show="loading">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+
+      <div ref="roomRef" class="house" v-show="!loading">
         <div class="floor">
           <div class="floor__front face"></div>
           <div class="floor__back face"></div>

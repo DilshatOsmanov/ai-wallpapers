@@ -1,32 +1,47 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
+import { getProduct } from '@/api/product'
 
-const wallpaperList = ref([
-  {
-    id: 1,
-    title: 'Обои Cristiana Masi I Damaschi 23613',
-    description:
-      'Cristiana Masi всегда следит за качеством продукции. Данная модель обоев имеет артикул 23613. Виниловые обои часто используют как в квартирах, так и в загородных домах.',
-    price: 3000,
-    wallpaperImg: '/wallpaper.jpg'
-  },
-  {
-    id: 2,
-    title: 'Обои Rasch Nubia',
-    description:
-      'Коллекция текстильных обоев Rasch Textil Nubia - творение немецких дизайнеров с выверенными линиями и формами гармонично сочетающимися друг с другом, как сообщающиеся сосуды.',
-    price: 3500,
-    wallpaperImg: '/wallpaper-2.jpg'
-  },
-  {
-    id: 3,
-    title: 'Обои Rasch Nubia 085180',
-    description:
-      'Коллекция текстильных обоев Rasch Textil Nubia - творение немецких дизайнеров с выверенными линиями и формами гармонично сочетающимися друг с другом, как сообщающиеся сосуды.',
-    price: 4500,
-    wallpaperImg: '/wallpaper-3.jpg'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
+
+const emit = defineEmits(['changeWallpaper'])
+const activeMaterial = ref('wallpapers')
+const materialList = ref([])
+const loading = ref(false)
+
+onMounted(() => {
+  fetchMaterial()
+})
+
+watch(activeMaterial, () => {
+  fetchMaterial()
+})
+
+const fetchMaterial = async () => {
+  try {
+    loading.value = true
+    const { data } = await getProduct({
+      type: activeMaterial.value
+    })
+
+    materialList.value = data
+  } catch {
+    toast('Ошибка загрузки материалов!', {
+      theme: 'auto',
+      type: 'error',
+      dangerouslyHTMLString: true
+    })
+  } finally {
+    loading.value = false
   }
-])
+}
+
+const changeWallpaper = (url) => {
+  if (url == null || activeMaterial.value != 'wallpapers') return
+
+  emit('changeWallpaper', url)
+}
 </script>
 
 <template>
@@ -49,38 +64,42 @@ const wallpaperList = ref([
           ></button>
         </div>
         <div class="modal-body">
-          <select class="form-select mb-3" aria-label="Material select">
-            <option selected value="wallpaper">Обои</option>
-            <option value="1">Плитка</option>
-            <option value="2">Краска</option>
-            <option value="3">Панели</option>
+          <select class="form-select mb-3" aria-label="Material select" v-model="activeMaterial">
+            <option selected value="wallpapers">Обои</option>
+            <option value="tiles">Плитка</option>
           </select>
 
-          <div class="room-modal__card-wrapper">
+          <div class="d-flex align-items-center justify-content-center w-100 my-5" v-if="loading">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+
+          <div class="room-modal__card-wrapper" v-else>
             <div
               class="room-modal__card mb-3"
               style="max-width: 540px"
-              v-for="wallpaper in wallpaperList"
+              v-for="wallpaper in materialList"
               :key="wallpaper.id"
             >
               <div>
                 <img
-                  :src="wallpaper.wallpaperImg"
+                  :src="wallpaper.image_url"
                   class="room-modal__card-img img-fluid"
                   alt="wallpaper"
                 />
-                <h5 class="room-modal__card-title">{{ wallpaper.title }}</h5>
+                <h5 class="room-modal__card-title">{{ wallpaper.name }}</h5>
               </div>
 
               <div class="room-modal__card-inner">
                 <p class="room-modal__card-price">
-                  {{ wallpaper.price.toLocaleString('ru-RU') }} тг/рулон
+                  {{ wallpaper.price.toLocaleString('ru-RU') }} {{ price_type }}
                 </p>
                 <button
                   class="room-modal__card-btn btn btn-sm btn-primary"
                   type="button"
                   data-bs-dismiss="modal"
-                  @click="$emit('changeWallpaper', wallpaper?.wallpaperImg)"
+                  @click="changeWallpaper(wallpaper?.image_url)"
                 >
                   Выбрать
                 </button>
