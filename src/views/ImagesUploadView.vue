@@ -181,99 +181,99 @@ const generateWallpapers = async () => {
           {{ error.$message }}
         </div>
       </div>
-    </div>
 
-    <!-- Кнопка отправки -->
-    <div class="container text-center">
-      <div class="mb-3">
-        <label for="input-room-length" class="form-label text-start w-100">Длина комнаты</label>
-        <div class="input-group">
-          <input
-            id="input-room-length"
-            type="text"
-            aria-label="Room length"
-            aria-describedby="length-addon"
-            inputmode="decimal"
-            class="form-control"
-            :class="{ 'is-invalid': v$.length.$errors.length }"
-            :disabled="state.loading"
-            v-model="state.length"
-          />
-          <div class="input-group-append">
-            <span class="input-group-text" id="length-addon">м</span>
+      <!-- Кнопка отправки -->
+      <div class="text-center">
+        <div class="mb-3">
+          <label for="input-room-length" class="form-label text-start w-100">Длина комнаты</label>
+          <div class="input-group">
+            <input
+              id="input-room-length"
+              type="text"
+              aria-label="Room length"
+              aria-describedby="length-addon"
+              inputmode="decimal"
+              class="form-control"
+              :class="{ 'is-invalid': v$.length.$errors.length }"
+              :disabled="state.loading"
+              v-model="state.length"
+            />
+            <div class="input-group-append">
+              <span class="input-group-text" id="length-addon">м</span>
+            </div>
+          </div>
+          <div
+            class="invalid-feedback text-start"
+            v-for="error of v$.length.$errors"
+            :key="error.$uid"
+          >
+            {{ error.$message }}
           </div>
         </div>
-        <div
-          class="invalid-feedback text-start"
-          v-for="error of v$.length.$errors"
-          :key="error.$uid"
-        >
-          {{ error.$message }}
-        </div>
-      </div>
 
-      <div class="mb-3">
-        <label for="input-room-width" class="form-label text-start w-100">Ширина комнаты</label>
-        <div class="input-group">
-          <input
-            id="input-room-width"
-            type="text"
-            aria-label="Room width"
-            aria-describedby="width-addon"
-            inputmode="decimal"
-            class="form-control"
-            :class="{ 'is-invalid': v$.width.$errors.length }"
-            :disabled="state.loading"
-            v-model="state.width"
-          />
-          <div class="input-group-append">
-            <span class="input-group-text" id="width-addo2">м</span>
+        <div class="mb-3">
+          <label for="input-room-width" class="form-label text-start w-100">Ширина комнаты</label>
+          <div class="input-group">
+            <input
+              id="input-room-width"
+              type="text"
+              aria-label="Room width"
+              aria-describedby="width-addon"
+              inputmode="decimal"
+              class="form-control"
+              :class="{ 'is-invalid': v$.width.$errors.length }"
+              :disabled="state.loading"
+              v-model="state.width"
+            />
+            <div class="input-group-append">
+              <span class="input-group-text" id="width-addo2">м</span>
+            </div>
+          </div>
+          <div
+            class="invalid-feedback text-start"
+            v-for="error of v$.width.$errors"
+            :key="error.$uid"
+          >
+            {{ error.$message }}
           </div>
         </div>
-        <div
-          class="invalid-feedback text-start"
-          v-for="error of v$.width.$errors"
-          :key="error.$uid"
-        >
-          {{ error.$message }}
-        </div>
-      </div>
 
-      <div class="mb-3">
-        <label for="input-room-height" class="form-label text-start w-100">Высота комнаты</label>
-        <div class="input-group">
-          <input
-            id="input-room-height"
-            type="text"
-            aria-label="Room height"
-            aria-describedby="height-addon"
-            inputmode="decimal"
-            class="form-control"
-            :class="{ 'is-invalid': v$.height.$errors.length }"
-            :disabled="state.loading"
-            v-model="state.height"
-          />
-          <div class="input-group-append">
-            <span class="input-group-text" id="height-addon">м</span>
+        <div class="mb-3">
+          <label for="input-room-height" class="form-label text-start w-100">Высота комнаты</label>
+          <div class="input-group">
+            <input
+              id="input-room-height"
+              type="text"
+              aria-label="Room height"
+              aria-describedby="height-addon"
+              inputmode="decimal"
+              class="form-control"
+              :class="{ 'is-invalid': v$.height.$errors.length }"
+              :disabled="state.loading"
+              v-model="state.height"
+            />
+            <div class="input-group-append">
+              <span class="input-group-text" id="height-addon">м</span>
+            </div>
+          </div>
+          <div
+            class="invalid-feedback text-start"
+            v-for="error of v$.height.$errors"
+            :key="error.$uid"
+          >
+            {{ error.$message }}
           </div>
         </div>
-        <div
-          class="invalid-feedback text-start"
-          v-for="error of v$.height.$errors"
-          :key="error.$uid"
-        >
-          {{ error.$message }}
-        </div>
-      </div>
 
-      <button
-        type="button"
-        class="btn btn-primary btn-lg px-5"
-        :disabled="state.loading"
-        @click="generateWallpapers"
-      >
-        {{ state.loading ? 'Загрузка...' : 'Генерировать' }}
-      </button>
+        <button
+          type="button"
+          class="btn btn-primary btn-lg px-5"
+          :disabled="state.loading"
+          @click="generateWallpapers"
+        >
+          {{ state.loading ? 'Загрузка...' : 'Генерировать' }}
+        </button>
+      </div>
     </div>
   </section>
 </template>
