@@ -112,7 +112,7 @@ const generateWallpapers = async () => {
 
 <template>
   <section
-    class="bg-light p-3 p-md-4 p-xl-5 min-vh-100 d-flex flex-column justify-content-between"
+    class="bg-light p-3 p-md-4 p-xl-5 d-flex flex-column justify-content-between"
     style="padding-top: 5rem !important"
   >
     <div class="container">
